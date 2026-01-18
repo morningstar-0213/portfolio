@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import profileImg from '../assets/profile.jpg';
 
 export function Hero() {
   const [isMobile, setIsMobile] = useState(false);
@@ -73,7 +74,7 @@ export function Hero() {
           >
             <div className="w-full h-full rounded-full bg-gradient-to-br from-blue-400/20 to-purple-400/20 flex items-center justify-center overflow-hidden">
               <img
-                src={`${import.meta.env.BASE_URL}profile.jpg`}
+                src={profileImg}
                 alt="Vishesh Ranjan"
                 className="w-full h-full object-cover"
                 onError={(e) => {
