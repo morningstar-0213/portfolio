@@ -15,7 +15,7 @@ export function Hero() {
   return (
     <section id="hero" className="relative min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 pt-32 pb-20 overflow-hidden">
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e40af15_1px,transparent_1px),linear-gradient(to_bottom,#7c3aed15_1px,transparent_1px)] bg-[size:2rem_2rem] md:bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_110%)]" />
-      
+
       {!isMobile && (
         <>
           <motion.div
@@ -36,7 +36,7 @@ export function Hero() {
           />
         </>
       )}
-      
+
       <div className="absolute inset-0">
         {[...Array(isMobile ? 8 : 15)].map((_, i) => (
           <motion.div
@@ -73,7 +73,7 @@ export function Hero() {
           >
             <div className="w-full h-full rounded-full bg-gradient-to-br from-blue-400/20 to-purple-400/20 flex items-center justify-center overflow-hidden">
               <img
-                src="/profile.jpg"
+                src={`${import.meta.env.BASE_URL}profile.jpg`}
                 alt="Vishesh Ranjan"
                 className="w-full h-full object-cover"
                 onError={(e) => {
@@ -106,7 +106,7 @@ export function Hero() {
           <p className="text-lg md:text-2xl text-gray-300 font-light tracking-wide">
             Cybersecurity Specialist & Ethical Hacker
           </p>
-          
+
           <p className="text-base md:text-lg text-gray-400 leading-relaxed max-w-2xl mx-auto">
             Transforming digital security through offensive excellence and defensive mastery.
           </p>
