@@ -1,4 +1,5 @@
 import { Hero } from './components/Hero';
+import { Journey } from './components/Journey';
 import { Expertise } from './components/Expertise';
 import { Projects } from './components/Projects';
 import { Contact } from './components/Contact';
@@ -12,6 +13,7 @@ export default function App() {
       <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_bottom_left,_var(--tw-gradient-stops))] from-purple-600/20 via-blue-900/10 to-transparent pointer-events-none" />
       <Navigation />
       <Hero />
+      <Journey />
       <Expertise />
       <Projects />
       <InteractiveGames />

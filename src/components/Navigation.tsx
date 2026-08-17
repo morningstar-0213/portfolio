@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Shield, Terminal, Briefcase, Mail } from 'lucide-react';
+import { Shield, Terminal, Briefcase, Mail, Award } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
 export function Navigation() {
@@ -45,6 +45,7 @@ export function Navigation() {
 
         <div className="flex gap-8">
           {[
+            { icon: Award, label: 'Certifications', id: 'journey' },
             { icon: Shield, label: 'Expertise', id: 'expertise' },
             { icon: Briefcase, label: 'Projects', id: 'projects' },
             { icon: Terminal, label: 'Tools', id: 'games' },
