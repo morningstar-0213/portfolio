@@ -45,9 +45,9 @@ export function Navigation() {
 
         <div className="flex gap-8">
           {[
-            { icon: Terminal, label: 'Journey', id: 'journey' },
             { icon: Shield, label: 'Expertise', id: 'expertise' },
             { icon: Briefcase, label: 'Projects', id: 'projects' },
+            { icon: Terminal, label: 'Tools', id: 'games' },
             { icon: Mail, label: 'Contact', id: 'contact' },
           ].map(({ icon: Icon, label, id }) => (
             <motion.button
