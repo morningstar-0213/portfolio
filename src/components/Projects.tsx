@@ -330,27 +330,8 @@ export function Projects() {
 
   return (
     <section id="projects" className="relative py-24 md:py-36 px-4 sm:px-6 overflow-hidden">
-      {/* Background glow effects */}
-      <div className="hidden md:block">
-        <motion.div
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.15, 0.3, 0.15],
-          }}
-          transition={{ duration: 12, repeat: Infinity }}
-          className="absolute bottom-10 left-10 w-96 h-96 bg-gradient-to-tr from-cyan-500/20 to-blue-600/20 rounded-full blur-[100px] pointer-events-none"
-        />
-        <motion.div
-          animate={{
-            scale: [1.2, 1, 1.2],
-            opacity: [0.15, 0.3, 0.15],
-          }}
-          transition={{ duration: 15, repeat: Infinity }}
-          className="absolute top-10 right-10 w-96 h-96 bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-full blur-[100px] pointer-events-none"
-        />
-      </div>
-      
       <div className="max-w-7xl mx-auto relative z-10">
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -358,26 +339,25 @@ export function Projects() {
           transition={{ duration: 0.8 }}
           className="text-center mb-16 md:mb-24"
         >
-          <span className="font-mono text-xs md:text-sm text-cyan-400 font-bold uppercase tracking-widest px-3.5 py-1.5 rounded-full bg-cyan-950/60 border border-cyan-500/30 mb-4 inline-block shadow-[0_0_15px_rgba(6,182,212,0.2)]">
-            Portfolio Showcase
+          <span className="font-mono text-xs md:text-sm text-cyan-400 font-bold uppercase tracking-widest px-3.5 py-1.5 rounded-full bg-cyan-950/60 border border-cyan-500/40 mb-4 inline-block shadow-[0_0_15px_rgba(6,182,212,0.2)]">
+            PORTFOLIO EXPLOIT & TOOL MATRIX
           </span>
           <motion.h2 
-            className="text-4xl sm:text-6xl md:text-7xl font-mono font-extrabold tracking-tight mb-4"
+            className="font-orbitron text-4xl sm:text-6xl md:text-7xl font-black tracking-wider mb-4 text-glow-cyan"
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            transition={{ type: 'spring', stiffness: 100 }}
           >
-            <span className="bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 bg-clip-text text-transparent drop-shadow-[0_8px_16px_rgba(59,130,246,0.3)]">
-              SECURITY PROJECTS
+            <span className="bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
+              PROJECT ARSENAL
             </span>
           </motion.h2>
-          <p className="text-gray-300 text-base sm:text-lg md:text-xl max-w-2xl mx-auto font-sans leading-relaxed">
+          <p className="text-slate-300 text-base sm:text-lg md:text-xl max-w-3xl mx-auto font-sans leading-relaxed">
             18 specialized tools and projects demonstrating offensive security techniques, red team tooling, and encryption protocols
           </p>
         </motion.div>
 
-        {/* Category filters */}
+        {/* Category Filter Pills */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -390,17 +370,17 @@ export function Projects() {
               initial={{ opacity: 0, scale: 0.8 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              transition={{ delay: index * 0.03 }}
+              transition={{ delay: index * 0.02 }}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setFilter(cat)}
-              className={`px-3.5 py-2 rounded-xl font-mono text-xs md:text-sm transition-all duration-300 ${
+              className={`px-4 py-2 rounded-xl font-orbitron text-xs font-bold tracking-wider transition-all duration-300 ${
                 filter === cat
-                  ? 'bg-gradient-to-r from-cyan-500 to-purple-600 text-white shadow-[0_0_20px_rgba(6,182,212,0.4)] border border-cyan-400 font-bold'
-                  : 'bg-slate-900/80 text-gray-400 hover:text-white border border-slate-800 hover:border-cyan-500/50 backdrop-blur-md'
+                  ? 'bg-gradient-to-r from-cyan-500 to-purple-600 text-white shadow-[0_0_20px_rgba(6,182,212,0.4)] border border-cyan-400'
+                  : 'bg-slate-900/80 text-slate-400 hover:text-white border border-slate-800 hover:border-cyan-500/50'
               }`}
             >
-              {cat === 'all' ? 'All Projects' : cat}
+              {cat === 'all' ? 'ALL PROJECTS' : cat.toUpperCase()}
             </motion.button>
           ))}
         </motion.div>
@@ -415,12 +395,7 @@ export function Projects() {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.8 }}
-                transition={{ 
-                  duration: 0.4, 
-                  delay: index * 0.03,
-                  type: 'spring',
-                  stiffness: 100,
-                }}
+                transition={{ duration: 0.4, delay: index * 0.03 }}
               >
                 <ProjectCard
                   project={project}
@@ -449,33 +424,33 @@ function ProjectCard({ project, onClick }: any) {
   return (
     <motion.div
       whileHover={{ scale: 1.02, y: -6 }}
-      whileTap={{ scale: 0.98 }}
       transition={{ type: 'spring', stiffness: 300, damping: 20 }}
       onClick={onClick}
-      className={`group relative h-full flex flex-col justify-between bg-slate-900/80 ${
-        project.featured
-          ? 'border-2 border-purple-500/70 shadow-[0_0_30px_rgba(168,85,247,0.25)]'
-          : 'border border-slate-800 hover:border-cyan-500/60'
-      } rounded-2xl p-6 overflow-hidden transition-all duration-500 cursor-pointer backdrop-blur-xl hover:shadow-[0_0_30px_rgba(6,182,212,0.2)]`}
+      className={`cyber-box relative h-full flex flex-col justify-between rounded-2xl p-6 transition-all duration-500 cursor-pointer group ${
+        project.featured ? 'border-purple-500/70 shadow-purple-500/20' : 'border-slate-800'
+      }`}
     >
+      <span className="absolute top-1.5 left-2 font-mono text-[9px] text-cyan-500/60">+</span>
+      <span className="absolute top-1.5 right-2 font-mono text-[9px] text-cyan-500/60">+</span>
+
       {project.featured && (
-        <div className="absolute top-4 right-4 px-3 py-1 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full text-[10px] font-mono font-bold text-white shadow-md tracking-wider">
+        <div className="absolute top-3.5 right-3.5 px-3 py-1 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full font-orbitron text-[9px] font-bold text-white tracking-widest shadow-md">
           FLAGSHIP
         </div>
       )}
 
       <div>
         <div className="flex items-center justify-between mb-4">
-          <div className="p-3 rounded-xl bg-cyan-950/60 border border-cyan-500/30 group-hover:border-cyan-400/60 transition-colors">
+          <div className="p-3 rounded-xl bg-slate-950 border border-cyan-500/30 group-hover:border-cyan-400 transition-colors">
             <project.icon className="w-7 h-7 text-cyan-400" strokeWidth={1.75} />
           </div>
         </div>
 
         <div className="mb-2">
-          <span className="text-xs text-cyan-400 font-mono font-semibold">{project.category}</span>
+          <span className="text-xs text-cyan-400 font-mono font-bold uppercase tracking-wider">{project.category}</span>
         </div>
 
-        <h3 className="text-xl font-mono font-bold text-white group-hover:text-cyan-300 transition-colors mb-2">
+        <h3 className="font-orbitron text-xl font-bold text-white group-hover:text-cyan-300 transition-colors mb-2 tracking-wide">
           {project.title}
         </h3>
         
@@ -485,7 +460,7 @@ function ProjectCard({ project, onClick }: any) {
           </p>
         )}
 
-        <p className="text-gray-400 text-xs md:text-sm mb-6 leading-relaxed line-clamp-3 font-sans">
+        <p className="text-slate-300 text-xs md:text-sm mb-6 leading-relaxed line-clamp-3 font-sans">
           {project.description}
         </p>
       </div>
@@ -495,20 +470,20 @@ function ProjectCard({ project, onClick }: any) {
           {project.tech.slice(0, 3).map((tech: string, i: number) => (
             <span
               key={i}
-              className="px-2.5 py-1 bg-slate-950/70 border border-slate-800 rounded text-[11px] text-gray-300 font-mono"
+              className="px-2.5 py-1 bg-slate-950 border border-slate-800 rounded text-[11px] text-slate-300 font-mono"
             >
               {tech}
             </span>
           ))}
           {project.tech.length > 3 && (
-            <span className="px-2 py-1 text-[11px] text-slate-500 font-mono font-bold">
+            <span className="px-2 py-1 text-[11px] text-slate-400 font-mono font-bold">
               +{project.tech.length - 3}
             </span>
           )}
         </div>
 
-        <div className="text-cyan-400 group-hover:text-cyan-300 text-xs font-mono font-bold inline-flex items-center gap-1.5">
-          <span>View Details & Specs</span>
+        <div className="text-cyan-400 group-hover:text-cyan-300 font-mono text-xs font-bold inline-flex items-center gap-1.5">
+          <span>VIEW DETAILS & SPECS</span>
           <span className="group-hover:translate-x-1 transition-transform">→</span>
         </div>
       </div>
@@ -523,7 +498,7 @@ function ProjectModal({ project, onClose }: any) {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       onClick={onClose}
-      className="fixed inset-0 bg-slate-950/90 backdrop-blur-md z-50 flex items-center justify-center p-4 md:p-6 overflow-y-auto"
+      className="fixed inset-0 bg-slate-950/95 backdrop-blur-md z-50 flex items-center justify-center p-4 md:p-6 overflow-y-auto"
     >
       <motion.div
         initial={{ scale: 0.9, y: 30, opacity: 0 }}
@@ -531,16 +506,16 @@ function ProjectModal({ project, onClose }: any) {
         exit={{ scale: 0.9, y: 30, opacity: 0 }}
         transition={{ type: 'spring', stiffness: 200, damping: 25 }}
         onClick={(e) => e.stopPropagation()}
-        className="bg-slate-900 border border-cyan-500/40 rounded-3xl p-6 md:p-8 max-w-3xl w-full max-h-[90vh] overflow-y-auto my-8 shadow-[0_0_50px_rgba(6,182,212,0.25)] relative"
+        className="cyber-box rounded-3xl p-6 md:p-8 max-w-3xl w-full max-h-[90vh] overflow-y-auto my-8 relative"
       >
         <div className="flex items-start justify-between mb-6 border-b border-slate-800 pb-6">
           <div className="flex items-center gap-4">
-            <div className="p-4 rounded-2xl bg-cyan-950/80 border border-cyan-500/40">
+            <div className="p-4 rounded-2xl bg-cyan-950 border border-cyan-500/40">
               <project.icon className="w-10 h-10 text-cyan-400" strokeWidth={1.75} />
             </div>
             <div>
               <span className="text-xs text-cyan-400 font-mono font-bold uppercase tracking-wider">{project.category}</span>
-              <h3 className="text-2xl md:text-3xl font-mono font-bold text-white">
+              <h3 className="font-orbitron text-2xl md:text-3xl font-bold text-white">
                 {project.title}
               </h3>
               {project.tagline && (
@@ -552,13 +527,13 @@ function ProjectModal({ project, onClose }: any) {
           </div>
           <button
             onClick={onClose}
-            className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-gray-400 hover:text-white transition-colors"
+            className="p-2 rounded-xl bg-slate-900 border border-slate-700 hover:border-cyan-400 text-slate-400 hover:text-white transition-colors"
           >
             <X className="w-6 h-6" />
           </button>
         </div>
 
-        <p className="text-gray-300 leading-relaxed text-base md:text-lg mb-8 font-sans">
+        <p className="text-slate-300 leading-relaxed text-base md:text-lg mb-8 font-sans">
           {project.description}
         </p>
 
@@ -568,8 +543,6 @@ function ProjectModal({ project, onClose }: any) {
             href={project.github}
             target="_blank"
             rel="noopener noreferrer"
-            whileHover={{ scale: 1.01 }}
-            whileTap={{ scale: 0.99 }}
             className="flex items-center gap-3 p-4 mb-8 bg-slate-950 border border-cyan-500/30 rounded-2xl hover:border-cyan-400 transition-all group"
           >
             <Code2 className="w-6 h-6 text-cyan-400 group-hover:rotate-12 transition-transform" />
@@ -584,15 +557,15 @@ function ProjectModal({ project, onClose }: any) {
         )}
 
         <div className="mb-8">
-          <h4 className="text-lg font-mono font-bold text-cyan-400 mb-4 flex items-center gap-2">
+          <h4 className="font-orbitron text-lg font-bold text-cyan-400 mb-4 flex items-center gap-2">
             <Shield className="w-5 h-5" />
-            Key Technical Features
+            KEY TECHNICAL FEATURES
           </h4>
           <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {project.highlights.map((highlight: string, i: number) => (
               <li
                 key={i}
-                className="flex items-start gap-2.5 p-3 rounded-xl bg-slate-950/60 border border-slate-800 text-xs md:text-sm text-gray-300"
+                className="flex items-start gap-2.5 p-3 rounded-xl bg-slate-950 border border-slate-800 text-xs md:text-sm text-slate-300 font-sans"
               >
                 <span className="text-cyan-400 font-bold mt-0.5">▸</span>
                 <span>{highlight}</span>
@@ -602,14 +575,14 @@ function ProjectModal({ project, onClose }: any) {
         </div>
 
         <div>
-          <h4 className="text-lg font-mono font-bold text-cyan-400 mb-4">
-            Technologies & Tools Used
+          <h4 className="font-orbitron text-lg font-bold text-cyan-400 mb-4">
+            TECHNOLOGIES & TOOLS USED
           </h4>
           <div className="flex flex-wrap gap-2">
             {project.tech.map((tech: string, i: number) => (
               <span
                 key={i}
-                className="px-3.5 py-1.5 bg-cyan-950/50 border border-cyan-500/30 rounded-xl text-xs md:text-sm font-mono text-cyan-200"
+                className="px-3.5 py-1.5 bg-slate-950 border border-cyan-500/30 rounded-xl text-xs md:text-sm font-mono text-cyan-200"
               >
                 {tech}
               </span>

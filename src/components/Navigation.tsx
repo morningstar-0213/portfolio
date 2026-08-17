@@ -25,7 +25,7 @@ export function Navigation() {
       transition={{ type: 'spring', stiffness: 120, damping: 22 }}
       className={`fixed top-0 w-full z-50 transition-all duration-500 ${
         scrolled 
-          ? 'bg-slate-950/85 backdrop-blur-2xl border-b border-slate-800/80 shadow-[0_10px_30px_rgba(0,0,0,0.8)] py-3' 
+          ? 'bg-slate-950/90 backdrop-blur-2xl border-b border-cyan-500/30 shadow-[0_10px_30px_rgba(0,0,0,0.9)] py-3' 
           : 'bg-transparent py-5'
       }`}
     >
@@ -36,7 +36,7 @@ export function Navigation() {
           className="flex items-center gap-3 cursor-pointer group"
           onClick={() => scrollToSection('hero')}
         >
-          <div className="relative p-2 rounded-xl bg-slate-900/90 border border-cyan-500/30 group-hover:border-cyan-400/70 transition-colors shadow-[0_0_15px_rgba(6,182,212,0.2)]">
+          <div className="relative p-2 rounded-xl bg-slate-950 border border-cyan-500/50 group-hover:border-cyan-400 transition-colors shadow-[0_0_15px_rgba(6,182,212,0.3)]">
             <motion.div
               animate={{ rotate: 360 }}
               transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
@@ -44,8 +44,8 @@ export function Navigation() {
               <Shield className="w-5 h-5 text-cyan-400" strokeWidth={2} />
             </motion.div>
           </div>
-          <span className="font-mono text-lg md:text-xl font-bold bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent tracking-wide">
-            Ethical Hacker
+          <span className="font-orbitron text-lg md:text-xl font-bold bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent tracking-widest uppercase">
+            ETHICAL HACKER
           </span>
         </motion.div>
 
@@ -65,7 +65,7 @@ export function Navigation() {
               className="group flex items-center gap-2 text-slate-400 hover:text-cyan-300 font-mono text-xs md:text-sm font-semibold transition-all duration-300 relative py-1"
             >
               <Icon className="w-4 h-4 text-slate-500 group-hover:text-cyan-400 transition-colors" />
-              <span className="hidden md:inline">{label}</span>
+              <span className="hidden md:inline font-orbitron text-xs font-bold tracking-wider uppercase">{label}</span>
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-cyan-400 to-purple-500 group-hover:w-full transition-all duration-300 rounded-full" />
             </motion.button>
           ))}
