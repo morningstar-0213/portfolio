@@ -221,19 +221,10 @@ export function Contact() {
           transition={{ duration: 0.8, delay: 0.3 }}
           className="mt-12 md:mt-16 text-center"
         >
-          <motion.div 
-            className="inline-block px-4 py-2 md:px-6 md:py-3 bg-gradient-to-r from-slate-900/80 via-blue-950/60 to-purple-950/60 border border-blue-500/30 rounded-lg md:rounded-xl backdrop-blur-sm shadow-lg"
-            whileHover={{ scale: isMobile ? 1 : 1.05 }}
-          >
-            <p className="text-gray-400 font-mono text-xs md:text-sm">
-              EC-COUNCIL CERTIFIED ETHICAL HACKER #*******
-            </p>
-          </motion.div>
-          
           <motion.p
-            animate={{ opacity: [0.4, 1, 0.4] }}
+            animate={{ opacity: [0.5, 1, 0.5] }}
             transition={{ duration: 4, repeat: Infinity }}
-            className="mt-6 md:mt-8 text-gray-500 font-mono text-xs md:text-sm italic px-4"
+            className="text-gray-400 font-mono text-xs md:text-sm italic px-4"
           >
             "From the shadows to the spotlight, using darkness to protect the light."
           </motion.p>

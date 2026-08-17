@@ -7,7 +7,7 @@ export function Navigation() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
+      setScrolled(window.scrollY > 40);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -22,28 +22,34 @@ export function Navigation() {
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      transition={{ type: 'spring', stiffness: 100, damping: 20 }}
+      transition={{ type: 'spring', stiffness: 120, damping: 22 }}
       className={`fixed top-0 w-full z-50 transition-all duration-500 ${
-        scrolled ? 'bg-slate-950/80 backdrop-blur-xl border-b border-blue-500/30 shadow-lg shadow-blue-500/10' : ''
+        scrolled 
+          ? 'bg-slate-950/85 backdrop-blur-2xl border-b border-slate-800/80 shadow-[0_10px_30px_rgba(0,0,0,0.8)] py-3' 
+          : 'bg-transparent py-5'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
         <motion.div
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="flex items-center gap-2 cursor-pointer group"
+          whileHover={{ scale: 1.03 }}
+          whileTap={{ scale: 0.97 }}
+          className="flex items-center gap-3 cursor-pointer group"
           onClick={() => scrollToSection('hero')}
         >
-          <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-          >
-            <Shield className="w-6 h-6 text-transparent bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text stroke-blue-400" />
-          </motion.div>
-          <span className="font-mono text-xl bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">CEH</span>
+          <div className="relative p-2 rounded-xl bg-slate-900/90 border border-cyan-500/30 group-hover:border-cyan-400/70 transition-colors shadow-[0_0_15px_rgba(6,182,212,0.2)]">
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
+            >
+              <Shield className="w-5 h-5 text-cyan-400" strokeWidth={2} />
+            </motion.div>
+          </div>
+          <span className="font-mono text-lg md:text-xl font-bold bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent tracking-wide">
+            Ethical Hacker
+          </span>
         </motion.div>
 
-        <div className="flex gap-8">
+        <div className="flex items-center gap-6 md:gap-8">
           {[
             { icon: Award, label: 'Certifications', id: 'journey' },
             { icon: Shield, label: 'Expertise', id: 'expertise' },
@@ -53,18 +59,14 @@ export function Navigation() {
           ].map(({ icon: Icon, label, id }) => (
             <motion.button
               key={id}
-              whileHover={{ scale: 1.1, y: -2 }}
+              whileHover={{ y: -2 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => scrollToSection(id)}
-              className="group flex items-center gap-2 text-gray-400 hover:text-transparent hover:bg-gradient-to-r hover:from-blue-400 hover:to-purple-500 hover:bg-clip-text transition-all duration-300"
+              className="group flex items-center gap-2 text-slate-400 hover:text-cyan-300 font-mono text-xs md:text-sm font-semibold transition-all duration-300 relative py-1"
             >
-              <motion.div
-                whileHover={{ rotate: 360 }}
-                transition={{ duration: 0.5 }}
-              >
-                <Icon className="w-4 h-4 group-hover:text-blue-400 transition-colors" />
-              </motion.div>
+              <Icon className="w-4 h-4 text-slate-500 group-hover:text-cyan-400 transition-colors" />
               <span className="hidden md:inline">{label}</span>
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-cyan-400 to-purple-500 group-hover:w-full transition-all duration-300 rounded-full" />
             </motion.button>
           ))}
         </div>

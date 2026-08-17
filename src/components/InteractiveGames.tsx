@@ -27,22 +27,32 @@ export function InteractiveGames() {
   ];
 
   return (
-    <section id="games" className="relative py-20 px-4 sm:px-6">
-      <div className="max-w-7xl mx-auto">
-        <motion.h2 
-          className="text-4xl sm:text-5xl md:text-6xl font-mono mb-4 md:mb-6 text-center"
+    <section id="games" className="relative py-24 md:py-36 px-4 sm:px-6 overflow-hidden">
+      <div className="max-w-7xl mx-auto relative z-10">
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
+          className="text-center mb-12 md:mb-16"
         >
-          <span className="bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
-            UTILITY TOOLS
+          <span className="font-mono text-xs md:text-sm text-cyan-400 font-bold uppercase tracking-widest px-3.5 py-1.5 rounded-full bg-cyan-950/60 border border-cyan-500/30 mb-4 inline-block shadow-[0_0_15px_rgba(6,182,212,0.2)]">
+            Interactive Security Suite
           </span>
-        </motion.h2>
-        <p className="text-center text-gray-400 mb-12 text-sm md:text-base">
-          Useful tools for developers and security enthusiasts
-        </p>
+          <motion.h2 
+            className="text-4xl sm:text-6xl md:text-7xl font-mono font-extrabold tracking-tight mb-4 text-center"
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+          >
+            <span className="bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 bg-clip-text text-transparent drop-shadow-[0_8px_16px_rgba(59,130,246,0.3)]">
+              UTILITY TOOLS
+            </span>
+          </motion.h2>
+          <p className="text-center text-gray-300 text-base sm:text-lg max-w-2xl mx-auto font-sans">
+            Interactive developer and security tools built directly into the portfolio
+          </p>
+        </motion.div>
 
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 mb-8">
           {games.map((game, index) => (
@@ -51,15 +61,18 @@ export function InteractiveGames() {
               initial={{ opacity: 0, scale: 0.8 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              whileHover={{ scale: 1.05, y: -5 }}
-              whileTap={{ scale: 0.95 }}
+              transition={{ delay: index * 0.05 }}
+              whileHover={{ scale: 1.03, y: -4 }}
+              whileTap={{ scale: 0.96 }}
               onClick={() => setActiveGame(game.id)}
-              className={`p-4 md:p-6 bg-gradient-to-br from-slate-900/80 via-blue-950/50 to-purple-950/50 border rounded-xl md:rounded-2xl backdrop-blur-xl transition-all cursor-pointer font-mono text-sm md:text-base font-bold ${
-                activeGame === game.id ? 'border-purple-500/70 shadow-lg shadow-purple-500/30' : 'border-blue-500/30 hover:border-purple-500/60'
+              className={`p-5 md:p-6 rounded-2xl backdrop-blur-xl transition-all cursor-pointer font-mono text-xs md:text-sm font-bold flex items-center justify-between border ${
+                activeGame === game.id 
+                  ? 'bg-slate-900 border-cyan-400 text-cyan-300 shadow-[0_0_25px_rgba(6,182,212,0.3)]' 
+                  : 'bg-slate-900/80 border-slate-800 text-gray-300 hover:border-cyan-500/50 hover:text-white'
               }`}
             >
-              {game.name}
+              <span>{game.name}</span>
+              <span className="text-cyan-400 font-bold">⚙</span>
             </motion.button>
           ))}
         </div>

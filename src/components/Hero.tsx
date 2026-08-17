@@ -78,7 +78,7 @@ export function Hero() {
             <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-cyan-400"></span>
           </span>
           <span className="font-mono text-xs md:text-sm text-cyan-300 tracking-wider font-semibold uppercase">
-            Certified Ethical Hacker & Security Researcher
+            Ethical Hacker & Security Researcher
           </span>
         </motion.div>
 
