@@ -58,7 +58,7 @@ I'm **Vishesh Ranjan**, a certified cybersecurity professional dedicated to prot
   - 📱 **Instagram**: [@morningstar0213](https://instagram.com/morningstar0213)
   - 💬 **Telegram**: [@morningstar_0213](https://t.me/morningstar_0213)
   - 🐙 **GitHub**: [@morningstar-0213](https://github.com/morningstar-0213)
-  - 📧 **Email**: [bhumiharshihsir12@gmail.com](mailto:bhumiharshihsir12@gmail.com)
+  - 📧 **Email**: [visheshranjan0213@gmail.com](mailto:visheshranjan0213@gmail.com)
 
 ## 🚀 Tech Stack
 
@@ -243,7 +243,7 @@ This project is open source and available under the [MIT License](LICENSE).
 I'm always interested in discussing cybersecurity and new opportunities!
 
 **Contact Methods:**
-- 📧 **Email**: [bhumiharshihsir12@gmail.com](mailto:bhumiharshihsir12@gmail.com)
+- 📧 **Email**: [visheshranjan0213@gmail.com](mailto:visheshranjan0213@gmail.com)
 - 📱 **Instagram**: [@morningstar0213](https://instagram.com/morningstar0213)
 - 💬 **Telegram**: [@morningstar_0213](https://t.me/morningstar_0213)
 - 🐙 **GitHub**: [@morningstar-0213](https://github.com/morningstar-0213)

@@ -34,8 +34,8 @@ export function Contact() {
     {
       icon: Mail,
       label: 'Email',
-      handle: 'bhumiharshihsir12@gmail.com',
-      url: 'mailto:bhumiharshihsir12@gmail.com',
+      handle: 'visheshranjan0213@gmail.com',
+      url: 'mailto:visheshranjan0213@gmail.com',
     },
   ];
 
@@ -123,7 +123,7 @@ export function Contact() {
           </p>
           
           <a
-            href="mailto:bhumiharshihsir12@gmail.com"
+            href="mailto:visheshranjan0213@gmail.com"
             className="inline-flex items-center gap-2 px-6 py-3 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-sans font-semibold text-xs sm:text-sm rounded-xl shadow-lg shadow-emerald-500/20 transition-all"
           >
             <Mail className="w-4 h-4" />
