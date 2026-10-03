@@ -24,9 +24,12 @@ export function TerminalConsole() {
   ]);
 
   const bottomRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (history.length > 2 && containerRef.current) {
+      containerRef.current.scrollTop = containerRef.current.scrollHeight;
+    }
   }, [history]);
 
   const handleCommand = (cmdStr: string) => {
@@ -162,7 +165,7 @@ export function TerminalConsole() {
           </div>
 
           {/* Console Output */}
-          <div className="p-4 md:p-6 font-mono text-xs md:text-sm max-h-[350px] overflow-y-auto space-y-3">
+          <div ref={containerRef} className="p-4 md:p-6 font-mono text-xs md:text-sm max-h-[350px] overflow-y-auto space-y-3">
             {history.map((item, index) => (
               <div key={index} className="space-y-1">
                 <div className="flex items-center gap-2 text-cyan-400">
