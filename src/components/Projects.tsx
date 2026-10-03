@@ -3,7 +3,7 @@ import {
   Shield, Mail, Wifi, Smartphone, Key, Lock, 
   MessageSquare, Globe, Database, Server, 
   Terminal, Fingerprint, AlertTriangle,
-  Radio, FileText, Unlock, Network, WifiOff, ExternalLink, X, Code2
+  Radio, FileText, Unlock, Network, WifiOff, ExternalLink, X, Instagram, ShieldAlert
 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
@@ -24,7 +24,6 @@ const projects = [
       'No metadata logging - IP addresses, timestamps, and user identities are completely omitted',
     ],
     tech: ['Tor Network', 'AES-256', 'Python', 'WebRTC', 'P2P', 'Zero-Knowledge'],
-    github: 'https://github.com/morningstar-0213/goodfellas',
     featured: true,
   },
   {
@@ -42,7 +41,6 @@ const projects = [
       'Integration with security awareness training programs',
     ],
     tech: ['PHP', 'JavaScript', 'Let\'s Encrypt', 'SMTP', 'HTML/CSS'],
-    github: 'https://github.com/morningstar-0213/phishing-framework',
   },
   {
     id: 3,
@@ -59,7 +57,6 @@ const projects = [
       'Evil twin AP detection and prevention testing',
     ],
     tech: ['Python', 'Scapy', 'Aircrack-ng', 'Monitor Mode', 'Packet Injection'],
-    github: 'https://github.com/morningstar-0213/network-jammer',
   },
   {
     id: 4,
@@ -76,7 +73,6 @@ const projects = [
       'Persistence mechanisms and anti-removal protection',
     ],
     tech: ['Java', 'Android SDK', 'WebSocket', 'ADB', 'Node.js'],
-    github: 'https://github.com/morningstar-0213/android-rat',
   },
   {
     id: 5,
@@ -93,7 +89,6 @@ const projects = [
       'Progress state saving and resume capabilities',
     ],
     tech: ['Python', 'Hydra', 'Threading', 'Regex', 'Socket Programming'],
-    github: 'https://github.com/morningstar-0213/bruteforcer',
   },
   {
     id: 6,
@@ -110,7 +105,6 @@ const projects = [
       'Automatic startup persistence across reboots',
     ],
     tech: ['C++', 'Windows API', 'Hooks', 'AES Encryption', 'Registry'],
-    github: 'https://github.com/morningstar-0213/keylogger',
   },
   {
     id: 7,
@@ -127,7 +121,6 @@ const projects = [
       'Password-based key derivation with PBKDF2',
     ],
     tech: ['Python', 'PyCrypto', 'OpenSSL', 'Base64', 'AES-256'],
-    github: 'https://github.com/morningstar-0213/message-encryptor',
   },
   {
     id: 8,
@@ -144,7 +137,6 @@ const projects = [
       'Detailed vulnerability reports with PoC reproduction steps',
     ],
     tech: ['Python', 'Selenium', 'BeautifulSoup', 'Requests', 'SQLMap'],
-    github: 'https://github.com/morningstar-0213/web-scanner',
   },
   {
     id: 9,
@@ -161,7 +153,6 @@ const projects = [
       'Command execution and shell upload capabilities',
     ],
     tech: ['Python', 'SQLMap', 'MySQL', 'PostgreSQL', 'MSSQL'],
-    github: 'https://github.com/morningstar-0213/sql-toolkit',
   },
   {
     id: 10,
@@ -178,7 +169,6 @@ const projects = [
       'Domain fronting and traffic obfuscation capabilities',
     ],
     tech: ['Python', 'Flask', 'WebSocket', 'SQLite', 'AES Encryption'],
-    github: 'https://github.com/morningstar-0213/c2-server',
   },
   {
     id: 11,
@@ -195,7 +185,6 @@ const projects = [
       'One-liner command generation for rapid deployment',
     ],
     tech: ['Python', 'Metasploit', 'PowerShell', 'Bash', 'Netcat'],
-    github: 'https://github.com/morningstar-0213/reverse-shell-gen',
   },
   {
     id: 12,
@@ -212,7 +201,6 @@ const projects = [
       'Visual target graph mapping and report generator',
     ],
     tech: ['Python', 'APIs', 'Web Scraping', 'Shodan', 'TheHarvester'],
-    github: 'https://github.com/morningstar-0213/osint-tool',
   },
   {
     id: 13,
@@ -229,7 +217,6 @@ const projects = [
       'Cross-platform binary exploitation suite',
     ],
     tech: ['Python', 'Assembly (x86/x64)', 'GDB', 'Pwntools', 'Radare2'],
-    github: 'https://github.com/morningstar-0213/exploit-kit',
   },
   {
     id: 14,
@@ -246,7 +233,6 @@ const projects = [
       'PCAP file import/export for detailed post-capture audits',
     ],
     tech: ['Python', 'Scapy', 'Wireshark', 'libpcap', 'NetworkX'],
-    github: 'https://github.com/morningstar-0213/packet-sniffer',
   },
   {
     id: 15,
@@ -263,7 +249,6 @@ const projects = [
       'Real-time hash rate and ETA calculations',
     ],
     tech: ['Python', 'Hashcat', 'John the Ripper', 'CUDA', 'Rainbow Tables'],
-    github: 'https://github.com/morningstar-0213/hash-cracker',
   },
   {
     id: 16,
@@ -280,7 +265,6 @@ const projects = [
       'Secure encrypted vault parsing',
     ],
     tech: ['Python', 'Mimikatz', 'LaZagne', 'SQLite', 'DPAPI'],
-    github: 'https://github.com/morningstar-0213/credential-harvester',
   },
   {
     id: 17,
@@ -297,7 +281,6 @@ const projects = [
       'Traffic flow logging and connection graphs',
     ],
     tech: ['Python', 'Scapy', 'Ettercap', 'SSLStrip', 'iptables'],
-    github: 'https://github.com/morningstar-0213/arp-spoofer',
   },
   {
     id: 18,
@@ -314,7 +297,6 @@ const projects = [
       'Custom wordlist generation from targeted OSINT',
     ],
     tech: ['Python', 'Aircrack-ng', 'Hashcat', 'Reaver', 'Cowpatty'],
-    github: 'https://github.com/morningstar-0213/wpa-cracker',
   },
 ];
 
@@ -375,7 +357,7 @@ export function Projects() {
           ))}
         </div>
 
-        {/* Projects Grid with Left / Right Scroll Entrance */}
+        {/* Projects Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {filteredProjects.map((project, index) => {
             const isLeft = index % 2 === 0;
@@ -475,15 +457,15 @@ function ProjectModal({ project, onClose }: any) {
         exit={{ scale: 0.9, y: 30, opacity: 0 }}
         transition={{ type: 'spring', stiffness: 200, damping: 25 }}
         onClick={(e) => e.stopPropagation()}
-        className="minimal-glass rounded-3xl p-6 md:p-8 max-w-3xl w-full max-h-[90vh] overflow-y-auto my-8 relative"
+        className="luxury-glass rounded-3xl p-6 md:p-8 max-w-3xl w-full max-h-[90vh] overflow-y-auto my-8 relative"
       >
         <div className="flex items-start justify-between mb-6 border-b border-slate-800 pb-6">
           <div className="flex items-center gap-4">
-            <div className="p-3.5 rounded-2xl bg-slate-900 border border-slate-800 text-cyan-400">
+            <div className="p-3.5 rounded-2xl bg-slate-900 border border-slate-800 text-emerald-400">
               <project.icon className="w-8 h-8" />
             </div>
             <div>
-              <span className="text-xs text-cyan-400 font-mono font-semibold">{project.category}</span>
+              <span className="text-xs text-emerald-400 font-mono font-semibold">{project.category}</span>
               <h3 className="text-2xl font-sans font-bold text-white">
                 {project.title}
               </h3>
@@ -501,27 +483,26 @@ function ProjectModal({ project, onClose }: any) {
           {project.description}
         </p>
 
-        {project.github && (
-          <a
-            href={project.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-3 p-4 mb-8 bg-slate-900/90 border border-slate-800 rounded-2xl hover:border-cyan-500/40 transition-all group"
-          >
-            <Code2 className="w-5 h-5 text-cyan-400" />
-            <div className="flex-1 min-w-0">
-              <div className="text-xs text-slate-500 font-mono">Source Repository</div>
-              <div className="text-sm font-mono text-cyan-300 font-semibold truncate">
-                {project.github}
-              </div>
+        {/* Private Repo - DM on IG button (NO GITHUB) */}
+        <a
+          href="https://instagram.com/morningstar0213"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-3 p-4 mb-8 bg-slate-900/90 border border-emerald-500/30 rounded-2xl hover:border-emerald-400 transition-all group"
+        >
+          <Instagram className="w-5 h-5 text-pink-400" />
+          <div className="flex-1 min-w-0">
+            <div className="text-xs text-emerald-400 font-mono font-semibold">Private Repository</div>
+            <div className="text-xs md:text-sm font-sans text-slate-200 group-hover:text-white">
+              Code is confidential. DM on Instagram <span className="font-mono text-pink-400">@morningstar0213</span> to request access.
             </div>
-            <ExternalLink className="w-4 h-4 text-cyan-400 group-hover:translate-x-1 transition-transform" />
-          </a>
-        )}
+          </div>
+          <ExternalLink className="w-4 h-4 text-emerald-400 group-hover:translate-x-1 transition-transform" />
+        </a>
 
         <div className="mb-8">
           <h4 className="text-base font-sans font-bold text-white mb-4 flex items-center gap-2">
-            <Shield className="w-4 h-4 text-cyan-400" />
+            <Shield className="w-4 h-4 text-emerald-400" />
             Key Features
           </h4>
           <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -530,7 +511,7 @@ function ProjectModal({ project, onClose }: any) {
                 key={i}
                 className="flex items-start gap-2.5 p-3 rounded-xl bg-slate-900/60 border border-slate-800 text-xs text-slate-300"
               >
-                <span className="text-cyan-400 font-bold mt-0.5">▸</span>
+                <span className="text-emerald-400 font-bold mt-0.5">▸</span>
                 <span>{highlight}</span>
               </li>
             ))}
@@ -545,7 +526,7 @@ function ProjectModal({ project, onClose }: any) {
             {project.tech.map((tech: string, i: number) => (
               <span
                 key={i}
-                className="px-3 py-1.5 bg-slate-900 border border-slate-800 rounded-xl text-xs font-mono text-cyan-300"
+                className="px-3 py-1.5 bg-slate-900 border border-slate-800 rounded-xl text-xs font-mono text-emerald-300"
               >
                 {tech}
               </span>

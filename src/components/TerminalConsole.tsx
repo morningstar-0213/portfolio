@@ -88,7 +88,7 @@ export function TerminalConsole() {
         break;
 
       case 'contact':
-        outputResult = 'Telegram: @morningstar_0213 | Instagram: @morningstar0213 | GitHub: morningstar-0213 | Email: visheshranjan0213@gmail.com';
+        outputResult = 'Telegram: @morningstar_0213 | Instagram: @morningstar0213 | Twitter: @MORNINGSTAR0213 | Email: visheshranjan0213@gmail.com';
         break;
 
       case 'clear':

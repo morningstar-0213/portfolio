@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Shield, Terminal, Briefcase, Mail, Award, Menu, X } from 'lucide-react';
+import { Shield, Terminal, Briefcase, Mail, Award, Menu, X, Twitter, Send, Instagram } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
 export function Navigation() {
@@ -36,11 +36,11 @@ export function Navigation() {
         transition={{ duration: 0.5 }}
         className={`max-w-4xl mx-auto rounded-full px-4 py-2 transition-all duration-300 flex items-center justify-between border ${
           scrolled
-            ? 'bg-slate-950/85 backdrop-blur-xl border-slate-800 shadow-xl shadow-black/50'
+            ? 'bg-slate-950/85 backdrop-blur-xl border-slate-800 shadow-2xl shadow-black/50'
             : 'bg-slate-900/60 backdrop-blur-md border-slate-800/60'
         }`}
       >
-        {/* Compact Logo */}
+        {/* Compact Brand */}
         <div
           onClick={() => scrollToSection('hero')}
           className="flex items-center gap-2 cursor-pointer group"
@@ -67,7 +67,38 @@ export function Navigation() {
           ))}
         </nav>
 
-        {/* Mobile Menu Button */}
+        {/* Social Quick Links (Twitter, IG, Telegram) - NO GITHUB */}
+        <div className="hidden md:flex items-center gap-3 border-l border-slate-800 pl-4">
+          <a
+            href="https://x.com/MORNINGSTAR0213"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-slate-400 hover:text-cyan-400 transition-colors p-1"
+            title="Twitter / X (@MORNINGSTAR0213)"
+          >
+            <Twitter className="w-3.5 h-3.5" />
+          </a>
+          <a
+            href="https://instagram.com/morningstar0213"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-slate-400 hover:text-pink-400 transition-colors p-1"
+            title="Instagram (@morningstar0213)"
+          >
+            <Instagram className="w-3.5 h-3.5" />
+          </a>
+          <a
+            href="https://t.me/morningstar_0213"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-slate-400 hover:text-blue-400 transition-colors p-1"
+            title="Telegram (@morningstar_0213)"
+          >
+            <Send className="w-3.5 h-3.5" />
+          </a>
+        </div>
+
+        {/* Mobile Menu Toggle */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           className="md:hidden p-1.5 text-slate-400 hover:text-white"
@@ -76,7 +107,7 @@ export function Navigation() {
         </button>
       </motion.div>
 
-      {/* Mobile Menu Dropdown */}
+      {/* Mobile Drawer */}
       {mobileMenuOpen && (
         <motion.div
           initial={{ opacity: 0, y: -10 }}
@@ -93,6 +124,24 @@ export function Navigation() {
               <span>{label}</span>
             </button>
           ))}
+          <div className="pt-2 border-t border-slate-800 flex justify-around">
+            <a
+              href="https://x.com/MORNINGSTAR0213"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs font-mono text-cyan-400 flex items-center gap-1"
+            >
+              <Twitter className="w-3.5 h-3.5" /> @MORNINGSTAR0213
+            </a>
+            <a
+              href="https://instagram.com/morningstar0213"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs font-mono text-pink-400 flex items-center gap-1"
+            >
+              <Instagram className="w-3.5 h-3.5" /> @morningstar0213
+            </a>
+          </div>
         </motion.div>
       )}
     </header>

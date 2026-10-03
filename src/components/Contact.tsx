@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Github, Send, Instagram, Mail, Shield, ArrowUpRight } from 'lucide-react';
+import { Send, Instagram, Mail, Shield, ArrowUpRight, Twitter } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
 export function Contact() {
@@ -14,6 +14,12 @@ export function Contact() {
 
   const socialLinks = [
     {
+      icon: Twitter,
+      label: 'Twitter / X',
+      handle: '@MORNINGSTAR0213',
+      url: 'https://x.com/MORNINGSTAR0213',
+    },
+    {
       icon: Instagram,
       label: 'Instagram',
       handle: '@morningstar0213',
@@ -24,12 +30,6 @@ export function Contact() {
       label: 'Telegram',
       handle: '@morningstar_0213',
       url: 'https://t.me/morningstar_0213',
-    },
-    {
-      icon: Github,
-      label: 'GitHub',
-      handle: '@morningstar-0213',
-      url: 'https://github.com/morningstar-0213',
     },
     {
       icon: Mail,
@@ -61,7 +61,7 @@ export function Contact() {
           </p>
         </motion.div>
 
-        {/* Social Link Cards */}
+        {/* Social Link Cards (NO GITHUB) */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
           {socialLinks.map((link, index) => {
             const isLeft = index % 2 === 0;

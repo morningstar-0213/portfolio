@@ -57,7 +57,7 @@ I'm **Vishesh Ranjan**, a certified cybersecurity professional dedicated to prot
 - Multiple contact methods:
   - 📱 **Instagram**: [@morningstar0213](https://instagram.com/morningstar0213)
   - 💬 **Telegram**: [@morningstar_0213](https://t.me/morningstar_0213)
-  - 🐙 **GitHub**: [@morningstar-0213](https://github.com/morningstar-0213)
+  - 🐦 **Twitter / X**: [@MORNINGSTAR0213](https://x.com/MORNINGSTAR0213)
   - 📧 **Email**: [visheshranjan0213@gmail.com](mailto:visheshranjan0213@gmail.com)
 
 ## 🚀 Tech Stack
@@ -246,7 +246,7 @@ I'm always interested in discussing cybersecurity and new opportunities!
 - 📧 **Email**: [visheshranjan0213@gmail.com](mailto:visheshranjan0213@gmail.com)
 - 📱 **Instagram**: [@morningstar0213](https://instagram.com/morningstar0213)
 - 💬 **Telegram**: [@morningstar_0213](https://t.me/morningstar_0213)
-- 🐙 **GitHub**: [@morningstar-0213](https://github.com/morningstar-0213)
+- 🐦 **Twitter / X**: [@MORNINGSTAR0213](https://x.com/MORNINGSTAR0213)
 
 ## 🙏 Acknowledgments
 
