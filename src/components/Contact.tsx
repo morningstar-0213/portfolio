@@ -40,29 +40,29 @@ export function Contact() {
   ];
 
   return (
-    <section id="contact" className="relative py-24 md:py-36 px-4 sm:px-6 overflow-hidden">
+    <section id="contact" className="relative py-20 md:py-32 px-4 overflow-hidden">
       <div className="max-w-4xl mx-auto relative z-10">
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 25 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false, amount: 0.3 }}
-          transition={{ duration: 0.7 }}
-          className="text-center mb-16 md:mb-24"
+          viewport={{ once: false, amount: 0.2 }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-16 md:mb-20"
         >
-          <span className="font-mono text-xs text-cyan-400 font-bold uppercase tracking-widest px-3.5 py-1.5 rounded-full bg-cyan-950/60 border border-cyan-500/30 mb-4 inline-block">
+          <span className="font-mono text-xs text-emerald-400 font-semibold uppercase tracking-widest px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 mb-3 inline-block">
             Get In Touch
           </span>
-          <h2 className="text-3xl sm:text-5xl md:text-6xl font-sans font-extrabold tracking-tight text-white mb-4">
+          <h2 className="text-2xl sm:text-4xl md:text-5xl font-sans font-extrabold text-white mb-3 tracking-tight">
             Connect & Collaborate
           </h2>
-          <p className="text-slate-400 text-base sm:text-lg max-w-xl mx-auto font-sans">
+          <p className="text-slate-400 text-sm sm:text-base max-w-lg mx-auto font-sans">
             Available for security consulting, penetration testing assessments, red teaming, and technical collaboration
           </p>
         </motion.div>
 
-        {/* Social Link Cards (Alternating Left/Right) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mb-16 md:mb-24">
+        {/* Social Link Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
           {socialLinks.map((link, index) => {
             const isLeft = index % 2 === 0;
 
@@ -72,30 +72,30 @@ export function Contact() {
                 href={link.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                initial={{ 
-                  opacity: 0, 
-                  x: isMobile ? 0 : isLeft ? -80 : 80,
-                  y: isMobile ? 30 : 0 
+                initial={{
+                  opacity: 0,
+                  x: isMobile ? 0 : isLeft ? -50 : 50,
+                  y: isMobile ? 25 : 0,
                 }}
                 whileInView={{ opacity: 1, x: 0, y: 0 }}
-                viewport={{ once: false, amount: 0.3 }}
-                transition={{ duration: 0.6, type: 'spring', stiffness: 90, damping: 20 }}
+                viewport={{ once: false, amount: 0.2 }}
+                transition={{ duration: 0.5, ease: 'easeOut' }}
                 whileHover={{ scale: 1.02 }}
-                className="minimal-glass relative rounded-2xl p-6 transition-all duration-300 flex items-center justify-between group hover:border-cyan-500/40"
+                className="luxury-glass relative rounded-2xl p-5 md:p-6 transition-all duration-300 flex items-center justify-between group hover:border-emerald-500/40"
               >
-                <div className="flex items-center gap-4 min-w-0">
-                  <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 text-cyan-400 group-hover:border-cyan-500/40 transition-colors">
-                    <link.icon className="w-6 h-6" />
+                <div className="flex items-center gap-3.5 min-w-0">
+                  <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 text-emerald-400 group-hover:border-emerald-500/40 transition-colors">
+                    <link.icon className="w-5 h-5" />
                   </div>
                   <div className="min-w-0">
-                    <div className="text-slate-500 text-xs font-mono mb-1">{link.label}</div>
-                    <div className="text-white font-sans font-semibold text-sm md:text-base group-hover:text-cyan-300 transition-colors truncate">
+                    <div className="text-slate-500 text-xs font-mono mb-0.5">{link.label}</div>
+                    <div className="text-white font-sans font-semibold text-xs sm:text-sm group-hover:text-emerald-300 transition-colors truncate">
                       {link.handle}
                     </div>
                   </div>
                 </div>
 
-                <ArrowUpRight className="w-5 h-5 text-slate-500 group-hover:text-cyan-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+                <ArrowUpRight className="w-4 h-4 text-slate-500 group-hover:text-emerald-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
               </motion.a>
             );
           })}
@@ -103,43 +103,41 @@ export function Contact() {
 
         {/* Call to Action Banner */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 25 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false, amount: 0.3 }}
-          transition={{ duration: 0.7 }}
-          className="minimal-glass rounded-3xl p-8 md:p-12 text-center"
+          viewport={{ once: false, amount: 0.2 }}
+          transition={{ duration: 0.5 }}
+          className="luxury-glass rounded-3xl p-6 md:p-10 text-center"
         >
-          <div className="flex justify-center mb-6">
-            <div className="p-4 rounded-2xl bg-cyan-950/60 border border-cyan-500/30 text-cyan-400">
-              <Shield className="w-10 h-10" />
+          <div className="flex justify-center mb-5">
+            <div className="p-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400">
+              <Shield className="w-8 h-8" />
             </div>
           </div>
           
-          <h3 className="text-2xl sm:text-3xl font-sans font-bold text-white mb-3">
+          <h3 className="text-xl sm:text-2xl font-sans font-bold text-white mb-2">
             Secure Your Digital Infrastructure
           </h3>
-          <p className="text-slate-400 text-sm md:text-base mb-8 max-w-lg mx-auto font-sans leading-relaxed">
+          <p className="text-slate-400 text-xs sm:text-sm mb-6 max-w-md mx-auto font-sans leading-relaxed">
             Whether you require manual penetration testing, code auditing, or red team simulations, let's connect.
           </p>
           
-          <motion.a
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.97 }}
+          <a
             href="mailto:bhumiharshihsir12@gmail.com"
-            className="inline-flex items-center gap-2.5 px-7 py-3.5 bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-sans font-bold text-sm rounded-xl shadow-lg shadow-cyan-500/25 transition-all duration-300"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-sans font-semibold text-xs sm:text-sm rounded-xl shadow-lg shadow-emerald-500/20 transition-all"
           >
             <Mail className="w-4 h-4" />
             <span>Start Conversation</span>
-          </motion.a>
+          </a>
         </motion.div>
 
         {/* Footer Quote */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          viewport={{ once: false, amount: 0.3 }}
-          transition={{ duration: 0.8 }}
-          className="mt-16 text-center"
+          viewport={{ once: false, amount: 0.2 }}
+          transition={{ duration: 0.6 }}
+          className="mt-14 text-center"
         >
           <p className="text-slate-500 font-mono text-xs italic px-4">
             "From the shadows to the spotlight, using darkness to protect the light."

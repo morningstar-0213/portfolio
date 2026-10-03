@@ -337,36 +337,36 @@ export function Projects() {
     : projects.filter(p => p.category === filter);
 
   return (
-    <section id="projects" className="relative py-24 md:py-36 px-4 sm:px-6 overflow-hidden">
-      <div className="max-w-6xl mx-auto relative z-10">
+    <section id="projects" className="relative py-20 md:py-32 px-4 overflow-hidden">
+      <div className="max-w-5xl mx-auto relative z-10">
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 25 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false, amount: 0.3 }}
-          transition={{ duration: 0.7 }}
-          className="text-center mb-16 md:mb-24"
+          viewport={{ once: false, amount: 0.2 }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-16 md:mb-20"
         >
-          <span className="font-mono text-xs text-cyan-400 font-bold uppercase tracking-widest px-3.5 py-1.5 rounded-full bg-cyan-950/60 border border-cyan-500/30 mb-4 inline-block">
+          <span className="font-mono text-xs text-emerald-400 font-semibold uppercase tracking-widest px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 mb-3 inline-block">
             Project Matrix
           </span>
-          <h2 className="text-3xl sm:text-5xl md:text-6xl font-sans font-extrabold tracking-tight text-white mb-4">
+          <h2 className="text-2xl sm:text-4xl md:text-5xl font-sans font-extrabold text-white mb-3 tracking-tight">
             Security Projects & Tools
           </h2>
-          <p className="text-slate-400 text-base sm:text-lg max-w-2xl mx-auto font-sans">
+          <p className="text-slate-400 text-sm sm:text-base max-w-xl mx-auto font-sans">
             18 specialized tools and projects demonstrating offensive security techniques, red team tooling, and encryption protocols
           </p>
         </motion.div>
 
         {/* Category Filters */}
-        <div className="flex flex-wrap justify-center gap-2 mb-12">
+        <div className="flex flex-wrap justify-center gap-2 mb-10">
           {categories.map((cat, index) => (
             <button
               key={cat}
               onClick={() => setFilter(cat)}
-              className={`px-3.5 py-1.5 rounded-xl text-xs font-mono transition-all ${
+              className={`px-3 py-1.5 rounded-xl text-xs font-mono transition-all ${
                 filter === cat
-                  ? 'bg-cyan-500 text-slate-950 font-bold shadow-lg shadow-cyan-500/20'
+                  ? 'bg-emerald-500 text-slate-950 font-bold shadow-lg shadow-emerald-500/20'
                   : 'bg-slate-900/80 text-slate-400 hover:text-white border border-slate-800'
               }`}
             >
@@ -376,7 +376,7 @@ export function Projects() {
         </div>
 
         {/* Projects Grid with Left / Right Scroll Entrance */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {filteredProjects.map((project, index) => {
             const isLeft = index % 2 === 0;
 
@@ -385,63 +385,58 @@ export function Projects() {
                 key={project.id}
                 initial={{ 
                   opacity: 0, 
-                  x: isMobile ? 0 : isLeft ? -90 : 90,
-                  y: isMobile ? 40 : 0 
+                  x: isMobile ? 0 : isLeft ? -50 : 50,
+                  y: isMobile ? 25 : 0 
                 }}
                 whileInView={{ opacity: 1, x: 0, y: 0 }}
-                viewport={{ once: false, amount: 0.25 }}
-                transition={{ 
-                  duration: 0.6, 
-                  type: 'spring', 
-                  stiffness: 90, 
-                  damping: 20 
-                }}
+                viewport={{ once: false, amount: 0.2 }}
+                transition={{ duration: 0.5, ease: 'easeOut' }}
                 onClick={() => setSelectedProject(project.id)}
-                className="minimal-glass relative rounded-2xl p-6 md:p-8 cursor-pointer hover:border-cyan-500/50 transition-all group flex flex-col justify-between"
+                className="luxury-glass relative rounded-2xl p-5 md:p-7 cursor-pointer hover:border-emerald-500/40 transition-all group flex flex-col justify-between"
               >
                 {project.featured && (
-                  <div className="absolute top-4 right-4 px-3 py-1 bg-cyan-500/10 border border-cyan-500/30 rounded-full font-mono text-[10px] font-bold text-cyan-300">
+                  <div className="absolute top-4 right-4 px-2.5 py-0.5 bg-emerald-500/10 border border-emerald-500/30 rounded-full font-mono text-[10px] font-semibold text-emerald-300">
                     FLAGSHIP
                   </div>
                 )}
 
                 <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 text-cyan-400 group-hover:border-cyan-500/40 transition-colors">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-emerald-400 group-hover:border-emerald-500/40 transition-colors">
                       <project.icon className="w-6 h-6" />
                     </div>
                   </div>
 
-                  <span className="text-xs text-cyan-400 font-mono font-semibold">{project.category}</span>
-                  <h3 className="text-xl font-sans font-bold text-white mt-1 mb-1 group-hover:text-cyan-300 transition-colors">
+                  <span className="text-xs text-emerald-400 font-mono font-semibold">{project.category}</span>
+                  <h3 className="text-lg md:text-xl font-sans font-bold text-white mt-1 mb-1 group-hover:text-emerald-300 transition-colors">
                     {project.title}
                   </h3>
                   {project.tagline && (
-                    <p className="text-purple-300 text-xs italic font-mono mb-3">{project.tagline}</p>
+                    <p className="text-purple-300 text-xs italic font-mono mb-2">{project.tagline}</p>
                   )}
-                  <p className="text-slate-300 text-xs md:text-sm leading-relaxed font-sans mb-6 line-clamp-3">
+                  <p className="text-slate-300 text-xs md:text-sm leading-relaxed font-sans mb-5 line-clamp-3">
                     {project.description}
                   </p>
                 </div>
 
                 <div>
-                  <div className="flex flex-wrap gap-1.5 pt-4 border-t border-slate-800/80 mb-4">
+                  <div className="flex flex-wrap gap-1.5 pt-3 border-t border-slate-800/80 mb-3">
                     {project.tech.slice(0, 3).map((tech: string, i: number) => (
                       <span
                         key={i}
-                        className="px-2.5 py-1 bg-slate-900/80 border border-slate-800 rounded-lg text-[11px] text-slate-300 font-mono"
+                        className="px-2 py-0.5 bg-slate-900/80 border border-slate-800 rounded-md text-[11px] text-slate-300 font-mono"
                       >
                         {tech}
                       </span>
                     ))}
                     {project.tech.length > 3 && (
-                      <span className="px-2 py-1 text-[11px] text-slate-500 font-mono font-semibold">
+                      <span className="px-1.5 py-0.5 text-[11px] text-slate-500 font-mono font-semibold">
                         +{project.tech.length - 3}
                       </span>
                     )}
                   </div>
 
-                  <div className="text-cyan-400 group-hover:text-cyan-300 text-xs font-mono font-semibold inline-flex items-center gap-1">
+                  <div className="text-emerald-400 group-hover:text-emerald-300 text-xs font-mono font-semibold inline-flex items-center gap-1">
                     <span>View Details & Specs</span>
                     <span className="group-hover:translate-x-1 transition-transform">→</span>
                   </div>

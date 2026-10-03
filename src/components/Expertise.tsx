@@ -64,73 +64,68 @@ export function Expertise() {
   }, []);
 
   return (
-    <section id="expertise" className="relative py-24 md:py-36 px-4 sm:px-6 overflow-hidden">
-      <div className="max-w-6xl mx-auto relative z-10">
+    <section id="expertise" className="relative py-20 md:py-32 px-4 overflow-hidden">
+      <div className="max-w-5xl mx-auto relative z-10">
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 25 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false, amount: 0.3 }}
-          transition={{ duration: 0.7 }}
-          className="text-center mb-16 md:mb-24"
+          viewport={{ once: false, amount: 0.2 }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-16 md:mb-20"
         >
-          <span className="font-mono text-xs text-cyan-400 font-bold uppercase tracking-widest px-3.5 py-1.5 rounded-full bg-cyan-950/60 border border-cyan-500/30 mb-4 inline-block">
+          <span className="font-mono text-xs text-emerald-400 font-semibold uppercase tracking-widest px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 mb-3 inline-block">
             Security Domains
           </span>
-          <h2 className="text-3xl sm:text-5xl md:text-6xl font-sans font-extrabold tracking-tight text-white mb-4">
+          <h2 className="text-2xl sm:text-4xl md:text-5xl font-sans font-extrabold text-white mb-3 tracking-tight">
             Offensive Security Expertise
           </h2>
-          <p className="text-slate-400 text-base sm:text-lg max-w-2xl mx-auto font-sans">
+          <p className="text-slate-400 text-sm sm:text-base max-w-xl mx-auto font-sans">
             Specialized capabilities developed through hands-on red teaming, offensive research, and security audits
           </p>
         </motion.div>
 
-        {/* Expertise Grid with Alternating Left/Right Scroll Reveal */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+        {/* Expertise Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {expertiseAreas.map((area, index) => {
             const isLeft = index % 2 === 0;
 
             return (
               <motion.div
                 key={index}
-                initial={{ 
-                  opacity: 0, 
-                  x: isMobile ? 0 : isLeft ? -90 : 90,
-                  y: isMobile ? 40 : 0 
+                initial={{
+                  opacity: 0,
+                  x: isMobile ? 0 : isLeft ? -50 : 50,
+                  y: isMobile ? 25 : 0,
                 }}
                 whileInView={{ opacity: 1, x: 0, y: 0 }}
-                viewport={{ once: false, amount: 0.3 }}
-                transition={{ 
-                  duration: 0.6, 
-                  type: 'spring', 
-                  stiffness: 90, 
-                  damping: 20 
-                }}
+                viewport={{ once: false, amount: 0.2 }}
+                transition={{ duration: 0.5, ease: 'easeOut' }}
               >
-                <div className="minimal-glass relative h-full rounded-2xl p-6 md:p-8 hover:border-cyan-500/50 transition-all group flex flex-col justify-between">
+                <div className="luxury-glass relative h-full rounded-2xl p-5 md:p-7 hover:border-emerald-500/40 transition-all group flex flex-col justify-between">
                   <div>
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 text-cyan-400 group-hover:border-cyan-500/40 transition-colors">
-                        <area.icon className="w-7 h-7" />
+                    <div className="flex items-center justify-between mb-3">
+                      <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-emerald-400 group-hover:border-emerald-500/40 transition-colors">
+                        <area.icon className="w-6 h-6" />
                       </div>
                       <span className="font-mono text-xs text-slate-500 font-semibold">
                         0{index + 1}
                       </span>
                     </div>
 
-                    <h3 className="text-xl font-sans font-bold text-white mb-2 group-hover:text-cyan-300 transition-colors">
+                    <h3 className="text-lg md:text-xl font-sans font-bold text-white mb-2 group-hover:text-emerald-300 transition-colors">
                       {area.title}
                     </h3>
-                    <p className="text-slate-300 text-xs md:text-sm leading-relaxed font-sans mb-6">
+                    <p className="text-slate-300 text-xs md:text-sm leading-relaxed font-sans mb-5">
                       {area.description}
                     </p>
                   </div>
 
-                  <div className="flex flex-wrap gap-1.5 pt-4 border-t border-slate-800/80">
+                  <div className="flex flex-wrap gap-1.5 pt-3 border-t border-slate-800/80">
                     {area.skills.map((skill: string, i: number) => (
                       <span
                         key={i}
-                        className="px-2.5 py-1 bg-slate-900/80 border border-slate-800 rounded-lg text-[11px] text-slate-300 font-mono"
+                        className="px-2 py-0.5 bg-slate-900 border border-slate-800 rounded-md text-[11px] text-slate-300 font-mono"
                       >
                         {skill}
                       </span>
@@ -144,16 +139,16 @@ export function Expertise() {
 
         {/* Tools Arsenal */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false, amount: 0.3 }}
-          transition={{ duration: 0.7 }}
-          className="minimal-glass mt-16 md:mt-24 p-8 md:p-12 rounded-2xl text-center"
+          viewport={{ once: false, amount: 0.2 }}
+          transition={{ duration: 0.5 }}
+          className="luxury-glass mt-16 p-6 md:p-10 rounded-2xl text-center"
         >
-          <h3 className="text-xl md:text-2xl font-sans font-bold text-white mb-8">
+          <h3 className="text-lg md:text-xl font-sans font-bold text-white mb-6">
             Security Toolchain & Arsenal
           </h3>
-          <div className="flex flex-wrap justify-center gap-2.5 md:gap-3">
+          <div className="flex flex-wrap justify-center gap-2">
             {[
               'Kali Linux', 'Metasploit', 'Burp Suite Pro', 'Wireshark', 'Nmap', 
               'Hashcat', 'John the Ripper', 'Aircrack-ng', 'OWASP ZAP',
@@ -162,7 +157,7 @@ export function Expertise() {
             ].map((tool, i) => (
               <span
                 key={i}
-                className="px-4 py-2 bg-slate-900/90 border border-slate-800 hover:border-cyan-500/40 rounded-xl font-mono text-xs text-slate-300 hover:text-cyan-300 transition-all cursor-default"
+                className="px-3 py-1.5 bg-slate-900 border border-slate-800 hover:border-emerald-500/40 rounded-xl font-mono text-xs text-slate-300 hover:text-emerald-300 transition-all cursor-default"
               >
                 #{tool}
               </span>

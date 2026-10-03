@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ShieldCheck, Award, Sparkles, Terminal, ChevronRight } from 'lucide-react';
+import { ShieldCheck, Award, Sparkles, Terminal } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
 interface Certification {
@@ -74,87 +74,78 @@ export function Journey() {
   }, []);
 
   return (
-    <section id="journey" className="relative py-24 md:py-36 px-4 sm:px-6 overflow-hidden">
-      <div className="max-w-6xl mx-auto relative z-10">
-        {/* Header */}
+    <section id="journey" className="relative py-20 md:py-32 px-4 overflow-hidden">
+      <div className="max-w-5xl mx-auto relative z-10">
+        {/* Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 25 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false, amount: 0.3 }}
-          transition={{ duration: 0.7 }}
-          className="text-center mb-20 md:mb-28"
+          viewport={{ once: false, amount: 0.2 }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-16 md:mb-24"
         >
-          <span className="font-mono text-xs text-cyan-400 font-bold uppercase tracking-widest px-3.5 py-1.5 rounded-full bg-cyan-950/60 border border-cyan-500/30 mb-4 inline-flex items-center gap-2">
-            <Award className="w-3.5 h-3.5 text-cyan-400" />
+          <span className="font-mono text-xs text-emerald-400 font-semibold uppercase tracking-widest px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 mb-3 inline-flex items-center gap-1.5">
+            <Award className="w-3.5 h-3.5" />
             Stream of Credentials
           </span>
-          <h2 className="text-3xl sm:text-5xl md:text-6xl font-sans font-extrabold tracking-tight text-white mb-4">
+          <h2 className="text-2xl sm:text-4xl md:text-5xl font-sans font-extrabold text-white mb-3 tracking-tight">
             Journey & Certifications
           </h2>
-          <p className="text-slate-400 text-base sm:text-lg max-w-2xl mx-auto font-sans">
-            Validated technical expertise through industry-recognized practical certifications along the stream of light
+          <p className="text-slate-400 text-sm sm:text-base max-w-xl mx-auto font-sans">
+            Validated technical expertise through practical certifications along the stream of light
           </p>
         </motion.div>
 
-        {/* Timeline Alternating Left/Right Stream Cards */}
-        <div className="relative space-y-12 md:space-y-20">
+        {/* Timeline Items */}
+        <div className="space-y-10 md:space-y-16">
           {certifications.map((cert, index) => {
             const isLeft = index % 2 === 0;
 
             return (
               <div key={cert.id} className="relative flex items-center justify-between md:flex-row flex-col">
-                {/* Central Stream Node Connector Point */}
-                <div className="absolute left-6 md:left-1/2 -translate-x-1/2 w-5 h-5 rounded-full bg-slate-950 border-2 border-cyan-400 shadow-[0_0_12px_#06b6d4] z-20 hidden md:block">
-                  <span className="absolute inset-1 rounded-full bg-cyan-400 animate-pulse" />
+                {/* Center Node Dot (Desktop) */}
+                <div className="absolute left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-slate-950 border-2 border-emerald-400 z-20 hidden md:block">
+                  <span className="absolute inset-0.5 rounded-full bg-emerald-400 animate-pulse" />
                 </div>
 
-                {/* Card Wrapper with Left / Right Scroll Animation */}
+                {/* Card Container */}
                 <motion.div
-                  initial={{ 
-                    opacity: 0, 
-                    x: isMobile ? 0 : isLeft ? -120 : 120,
-                    y: isMobile ? 40 : 0
+                  initial={{
+                    opacity: 0,
+                    x: isMobile ? 0 : isLeft ? -70 : 70,
+                    y: isMobile ? 30 : 0,
                   }}
                   whileInView={{ opacity: 1, x: 0, y: 0 }}
-                  viewport={{ once: false, amount: 0.35 }}
-                  transition={{ 
-                    duration: 0.7, 
-                    type: 'spring', 
-                    stiffness: 90, 
-                    damping: 20 
-                  }}
-                  className={`w-full md:w-[45%] ${
-                    isLeft ? 'md:mr-auto' : 'md:ml-auto'
-                  }`}
+                  viewport={{ once: false, amount: 0.2 }}
+                  transition={{ duration: 0.5, ease: 'easeOut' }}
+                  className={`w-full md:w-[46%] ${isLeft ? 'md:mr-auto' : 'md:ml-auto'}`}
                 >
-                  <div className="minimal-glass relative rounded-2xl p-6 md:p-8 group hover:border-cyan-500/50 transition-all">
-                    {/* Header */}
-                    <div className="flex items-start justify-between mb-4">
-                      <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 text-cyan-400 group-hover:border-cyan-500/40 transition-colors">
-                        <ShieldCheck className="w-7 h-7" />
+                  <div className="luxury-glass relative rounded-2xl p-5 md:p-7 group hover:border-emerald-500/40 transition-all">
+                    <div className="flex items-start justify-between mb-3">
+                      <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-emerald-400">
+                        <ShieldCheck className="w-6 h-6" />
                       </div>
                       {cert.featured && (
-                        <span className="px-3 py-1 bg-cyan-500/10 border border-cyan-500/30 rounded-full font-mono text-[11px] font-bold text-cyan-300">
+                        <span className="px-2.5 py-0.5 bg-emerald-500/10 border border-emerald-500/30 rounded-full font-mono text-[10px] font-semibold text-emerald-300">
                           {cert.level}
                         </span>
                       )}
                     </div>
 
-                    <span className="font-mono text-xs text-cyan-400 font-semibold">{cert.issuer}</span>
-                    <h3 className="text-xl md:text-2xl font-sans font-bold text-white mt-1 mb-1 group-hover:text-cyan-300 transition-colors">
+                    <span className="font-mono text-xs text-emerald-400 font-semibold">{cert.issuer}</span>
+                    <h3 className="text-lg md:text-xl font-sans font-bold text-white mt-1 mb-1 group-hover:text-emerald-300 transition-colors">
                       {cert.title}
                     </h3>
-                    <p className="text-slate-400 text-xs font-mono mb-4">{cert.code}</p>
-                    <p className="text-slate-300 text-xs md:text-sm leading-relaxed font-sans mb-6">
+                    <p className="text-slate-400 text-xs font-mono mb-3">{cert.code}</p>
+                    <p className="text-slate-300 text-xs md:text-sm leading-relaxed font-sans mb-5">
                       {cert.description}
                     </p>
 
-                    {/* Skill Tags */}
-                    <div className="flex flex-wrap gap-1.5 pt-4 border-t border-slate-800/80">
+                    <div className="flex flex-wrap gap-1.5 pt-3 border-t border-slate-800/80">
                       {cert.skills.map((skill, i) => (
                         <span
                           key={i}
-                          className="px-2.5 py-1 bg-slate-900/80 border border-slate-800 rounded-lg text-[11px] text-slate-300 font-mono"
+                          className="px-2 py-0.5 bg-slate-900 border border-slate-800 rounded-md text-[11px] text-slate-300 font-mono"
                         >
                           {skill}
                         </span>
@@ -166,38 +157,42 @@ export function Journey() {
             );
           })}
 
-          {/* "And Many More To Come..." Card (Appears from Right) */}
+          {/* "And Many More To Come..." Card */}
           <div className="relative flex items-center justify-between md:flex-row flex-col">
-            <div className="absolute left-6 md:left-1/2 -translate-x-1/2 w-5 h-5 rounded-full bg-slate-950 border-2 border-purple-400 shadow-[0_0_12px_#a855f7] z-20 hidden md:block">
-              <span className="absolute inset-1 rounded-full bg-purple-400 animate-pulse" />
+            <div className="absolute left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-slate-950 border-2 border-indigo-400 z-20 hidden md:block">
+              <span className="absolute inset-0.5 rounded-full bg-indigo-400 animate-pulse" />
             </div>
 
             <motion.div
-              initial={{ opacity: 0, x: isMobile ? 0 : 120, y: isMobile ? 40 : 0 }}
+              initial={{
+                opacity: 0,
+                x: isMobile ? 0 : 70,
+                y: isMobile ? 30 : 0,
+              }}
               whileInView={{ opacity: 1, x: 0, y: 0 }}
-              viewport={{ once: false, amount: 0.35 }}
-              transition={{ duration: 0.7, type: 'spring', stiffness: 90, damping: 20 }}
-              className="w-full md:w-[45%] md:ml-auto"
+              viewport={{ once: false, amount: 0.2 }}
+              transition={{ duration: 0.5, ease: 'easeOut' }}
+              className="w-full md:w-[46%] md:ml-auto"
             >
-              <div className="minimal-glass relative rounded-2xl p-6 md:p-8 group hover:border-purple-500/50 transition-all">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="p-3 rounded-xl bg-purple-950/50 border border-purple-500/30 text-purple-400">
-                    <Sparkles className="w-7 h-7 animate-pulse" />
+              <div className="luxury-glass relative rounded-2xl p-5 md:p-7 group hover:border-indigo-500/40 transition-all">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="p-2.5 rounded-xl bg-indigo-950/50 border border-indigo-500/30 text-indigo-400">
+                    <Sparkles className="w-6 h-6 animate-pulse" />
                   </div>
-                  <span className="px-3 py-1 bg-purple-500/10 border border-purple-500/30 rounded-full font-mono text-[11px] font-bold text-purple-300">
+                  <span className="px-2.5 py-0.5 bg-indigo-500/10 border border-indigo-500/30 rounded-full font-mono text-[10px] font-semibold text-indigo-300">
                     CONTINUOUS RESEARCH
                   </span>
                 </div>
 
-                <h3 className="text-xl md:text-2xl font-sans font-bold text-white mb-2 group-hover:text-purple-300 transition-colors">
+                <h3 className="text-lg md:text-xl font-sans font-bold text-white mb-1 group-hover:text-indigo-300 transition-colors">
                   And Many More To Come...
                 </h3>
-                <p className="text-purple-400 text-xs font-mono mb-4">Ongoing Advanced Labs & Certifications</p>
-                <p className="text-slate-300 text-xs md:text-sm leading-relaxed font-sans mb-6">
+                <p className="text-indigo-400 text-xs font-mono mb-3">Ongoing Labs & Advanced Certifications</p>
+                <p className="text-slate-300 text-xs md:text-sm leading-relaxed font-sans mb-5">
                   Constantly expanding offensive security knowledge through advanced OffSec labs, HackTheBox Pro labs, zero-day research, and preparing for upcoming advanced certifications.
                 </p>
-                <div className="pt-4 border-t border-purple-500/20 text-xs font-mono text-purple-300 font-semibold flex items-center gap-2">
-                  <Terminal className="w-4 h-4 text-purple-400" />
+                <div className="pt-3 border-t border-indigo-500/20 text-xs font-mono text-indigo-300 font-semibold flex items-center gap-2">
+                  <Terminal className="w-4 h-4 text-indigo-400" />
                   <span>Status: Continuous Pursuit of Mastery</span>
                 </div>
               </div>
