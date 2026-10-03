@@ -5,7 +5,7 @@ import {
   Terminal, Fingerprint, AlertTriangle,
   Radio, FileText, Unlock, Network, WifiOff, ExternalLink, X, Code2
 } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const projects = [
   {
@@ -321,6 +321,14 @@ const projects = [
 export function Projects() {
   const [selectedProject, setSelectedProject] = useState<number | null>(null);
   const [filter, setFilter] = useState<string>('all');
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const categories = ['all', ...Array.from(new Set(projects.map(p => p.category)))];
 
@@ -330,84 +338,121 @@ export function Projects() {
 
   return (
     <section id="projects" className="relative py-24 md:py-36 px-4 sm:px-6 overflow-hidden">
-      <div className="max-w-7xl mx-auto relative z-10">
+      <div className="max-w-6xl mx-auto relative z-10">
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
+          viewport={{ once: false, amount: 0.3 }}
+          transition={{ duration: 0.7 }}
           className="text-center mb-16 md:mb-24"
         >
-          <span className="font-mono text-xs md:text-sm text-cyan-400 font-bold uppercase tracking-widest px-3.5 py-1.5 rounded-full bg-cyan-950/60 border border-cyan-500/40 mb-4 inline-block shadow-[0_0_15px_rgba(6,182,212,0.2)]">
-            PORTFOLIO EXPLOIT & TOOL MATRIX
+          <span className="font-mono text-xs text-cyan-400 font-bold uppercase tracking-widest px-3.5 py-1.5 rounded-full bg-cyan-950/60 border border-cyan-500/30 mb-4 inline-block">
+            Project Matrix
           </span>
-          <motion.h2 
-            className="font-orbitron text-4xl sm:text-6xl md:text-7xl font-black tracking-wider mb-4 text-glow-cyan"
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-          >
-            <span className="bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
-              PROJECT ARSENAL
-            </span>
-          </motion.h2>
-          <p className="text-slate-300 text-base sm:text-lg md:text-xl max-w-3xl mx-auto font-sans leading-relaxed">
+          <h2 className="text-3xl sm:text-5xl md:text-6xl font-sans font-extrabold tracking-tight text-white mb-4">
+            Security Projects & Tools
+          </h2>
+          <p className="text-slate-400 text-base sm:text-lg max-w-2xl mx-auto font-sans">
             18 specialized tools and projects demonstrating offensive security techniques, red team tooling, and encryption protocols
           </p>
         </motion.div>
 
-        {/* Category Filter Pills */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="flex flex-wrap justify-center gap-2 md:gap-3 mb-12 md:mb-16"
-        >
+        {/* Category Filters */}
+        <div className="flex flex-wrap justify-center gap-2 mb-12">
           {categories.map((cat, index) => (
-            <motion.button
+            <button
               key={cat}
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.02 }}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
               onClick={() => setFilter(cat)}
-              className={`px-4 py-2 rounded-xl font-orbitron text-xs font-bold tracking-wider transition-all duration-300 ${
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-mono transition-all ${
                 filter === cat
-                  ? 'bg-gradient-to-r from-cyan-500 to-purple-600 text-white shadow-[0_0_20px_rgba(6,182,212,0.4)] border border-cyan-400'
-                  : 'bg-slate-900/80 text-slate-400 hover:text-white border border-slate-800 hover:border-cyan-500/50'
+                  ? 'bg-cyan-500 text-slate-950 font-bold shadow-lg shadow-cyan-500/20'
+                  : 'bg-slate-900/80 text-slate-400 hover:text-white border border-slate-800'
               }`}
             >
-              {cat === 'all' ? 'ALL PROJECTS' : cat.toUpperCase()}
-            </motion.button>
+              {cat === 'all' ? 'All Projects' : cat}
+            </button>
           ))}
-        </motion.div>
+        </div>
 
-        {/* Projects grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-          <AnimatePresence mode="popLayout">
-            {filteredProjects.map((project, index) => (
+        {/* Projects Grid with Left / Right Scroll Entrance */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+          {filteredProjects.map((project, index) => {
+            const isLeft = index % 2 === 0;
+
+            return (
               <motion.div
                 key={project.id}
-                layout
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.8 }}
-                transition={{ duration: 0.4, delay: index * 0.03 }}
+                initial={{ 
+                  opacity: 0, 
+                  x: isMobile ? 0 : isLeft ? -90 : 90,
+                  y: isMobile ? 40 : 0 
+                }}
+                whileInView={{ opacity: 1, x: 0, y: 0 }}
+                viewport={{ once: false, amount: 0.25 }}
+                transition={{ 
+                  duration: 0.6, 
+                  type: 'spring', 
+                  stiffness: 90, 
+                  damping: 20 
+                }}
+                onClick={() => setSelectedProject(project.id)}
+                className="minimal-glass relative rounded-2xl p-6 md:p-8 cursor-pointer hover:border-cyan-500/50 transition-all group flex flex-col justify-between"
               >
-                <ProjectCard
-                  project={project}
-                  onClick={() => setSelectedProject(project.id)}
-                />
+                {project.featured && (
+                  <div className="absolute top-4 right-4 px-3 py-1 bg-cyan-500/10 border border-cyan-500/30 rounded-full font-mono text-[10px] font-bold text-cyan-300">
+                    FLAGSHIP
+                  </div>
+                )}
+
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 text-cyan-400 group-hover:border-cyan-500/40 transition-colors">
+                      <project.icon className="w-6 h-6" />
+                    </div>
+                  </div>
+
+                  <span className="text-xs text-cyan-400 font-mono font-semibold">{project.category}</span>
+                  <h3 className="text-xl font-sans font-bold text-white mt-1 mb-1 group-hover:text-cyan-300 transition-colors">
+                    {project.title}
+                  </h3>
+                  {project.tagline && (
+                    <p className="text-purple-300 text-xs italic font-mono mb-3">{project.tagline}</p>
+                  )}
+                  <p className="text-slate-300 text-xs md:text-sm leading-relaxed font-sans mb-6 line-clamp-3">
+                    {project.description}
+                  </p>
+                </div>
+
+                <div>
+                  <div className="flex flex-wrap gap-1.5 pt-4 border-t border-slate-800/80 mb-4">
+                    {project.tech.slice(0, 3).map((tech: string, i: number) => (
+                      <span
+                        key={i}
+                        className="px-2.5 py-1 bg-slate-900/80 border border-slate-800 rounded-lg text-[11px] text-slate-300 font-mono"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                    {project.tech.length > 3 && (
+                      <span className="px-2 py-1 text-[11px] text-slate-500 font-mono font-semibold">
+                        +{project.tech.length - 3}
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="text-cyan-400 group-hover:text-cyan-300 text-xs font-mono font-semibold inline-flex items-center gap-1">
+                    <span>View Details & Specs</span>
+                    <span className="group-hover:translate-x-1 transition-transform">→</span>
+                  </div>
+                </div>
               </motion.div>
-            ))}
-          </AnimatePresence>
+            );
+          })}
         </div>
       </div>
 
-      {/* Project detail modal */}
+      {/* Detail Modal */}
       <AnimatePresence>
         {selectedProject && (
           <ProjectModal
@@ -420,77 +465,6 @@ export function Projects() {
   );
 }
 
-function ProjectCard({ project, onClick }: any) {
-  return (
-    <motion.div
-      whileHover={{ scale: 1.02, y: -6 }}
-      transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-      onClick={onClick}
-      className={`cyber-box relative h-full flex flex-col justify-between rounded-2xl p-6 transition-all duration-500 cursor-pointer group ${
-        project.featured ? 'border-purple-500/70 shadow-purple-500/20' : 'border-slate-800'
-      }`}
-    >
-      <span className="absolute top-1.5 left-2 font-mono text-[9px] text-cyan-500/60">+</span>
-      <span className="absolute top-1.5 right-2 font-mono text-[9px] text-cyan-500/60">+</span>
-
-      {project.featured && (
-        <div className="absolute top-3.5 right-3.5 px-3 py-1 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full font-orbitron text-[9px] font-bold text-white tracking-widest shadow-md">
-          FLAGSHIP
-        </div>
-      )}
-
-      <div>
-        <div className="flex items-center justify-between mb-4">
-          <div className="p-3 rounded-xl bg-slate-950 border border-cyan-500/30 group-hover:border-cyan-400 transition-colors">
-            <project.icon className="w-7 h-7 text-cyan-400" strokeWidth={1.75} />
-          </div>
-        </div>
-
-        <div className="mb-2">
-          <span className="text-xs text-cyan-400 font-mono font-bold uppercase tracking-wider">{project.category}</span>
-        </div>
-
-        <h3 className="font-orbitron text-xl font-bold text-white group-hover:text-cyan-300 transition-colors mb-2 tracking-wide">
-          {project.title}
-        </h3>
-        
-        {project.tagline && (
-          <p className="text-purple-300 text-xs italic font-mono mb-3">
-            {project.tagline}
-          </p>
-        )}
-
-        <p className="text-slate-300 text-xs md:text-sm mb-6 leading-relaxed line-clamp-3 font-sans">
-          {project.description}
-        </p>
-      </div>
-
-      <div>
-        <div className="flex flex-wrap gap-1.5 mb-5 pt-3 border-t border-slate-800">
-          {project.tech.slice(0, 3).map((tech: string, i: number) => (
-            <span
-              key={i}
-              className="px-2.5 py-1 bg-slate-950 border border-slate-800 rounded text-[11px] text-slate-300 font-mono"
-            >
-              {tech}
-            </span>
-          ))}
-          {project.tech.length > 3 && (
-            <span className="px-2 py-1 text-[11px] text-slate-400 font-mono font-bold">
-              +{project.tech.length - 3}
-            </span>
-          )}
-        </div>
-
-        <div className="text-cyan-400 group-hover:text-cyan-300 font-mono text-xs font-bold inline-flex items-center gap-1.5">
-          <span>VIEW DETAILS & SPECS</span>
-          <span className="group-hover:translate-x-1 transition-transform">→</span>
-        </div>
-      </div>
-    </motion.div>
-  );
-}
-
 function ProjectModal({ project, onClose }: any) {
   return (
     <motion.div
@@ -498,7 +472,7 @@ function ProjectModal({ project, onClose }: any) {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       onClick={onClose}
-      className="fixed inset-0 bg-slate-950/95 backdrop-blur-md z-50 flex items-center justify-center p-4 md:p-6 overflow-y-auto"
+      className="fixed inset-0 bg-slate-950/90 backdrop-blur-md z-50 flex items-center justify-center p-4 md:p-6 overflow-y-auto"
     >
       <motion.div
         initial={{ scale: 0.9, y: 30, opacity: 0 }}
@@ -506,66 +480,60 @@ function ProjectModal({ project, onClose }: any) {
         exit={{ scale: 0.9, y: 30, opacity: 0 }}
         transition={{ type: 'spring', stiffness: 200, damping: 25 }}
         onClick={(e) => e.stopPropagation()}
-        className="cyber-box rounded-3xl p-6 md:p-8 max-w-3xl w-full max-h-[90vh] overflow-y-auto my-8 relative"
+        className="minimal-glass rounded-3xl p-6 md:p-8 max-w-3xl w-full max-h-[90vh] overflow-y-auto my-8 relative"
       >
         <div className="flex items-start justify-between mb-6 border-b border-slate-800 pb-6">
           <div className="flex items-center gap-4">
-            <div className="p-4 rounded-2xl bg-cyan-950 border border-cyan-500/40">
-              <project.icon className="w-10 h-10 text-cyan-400" strokeWidth={1.75} />
+            <div className="p-3.5 rounded-2xl bg-slate-900 border border-slate-800 text-cyan-400">
+              <project.icon className="w-8 h-8" />
             </div>
             <div>
-              <span className="text-xs text-cyan-400 font-mono font-bold uppercase tracking-wider">{project.category}</span>
-              <h3 className="font-orbitron text-2xl md:text-3xl font-bold text-white">
+              <span className="text-xs text-cyan-400 font-mono font-semibold">{project.category}</span>
+              <h3 className="text-2xl font-sans font-bold text-white">
                 {project.title}
               </h3>
-              {project.tagline && (
-                <p className="text-purple-400 text-sm font-mono italic mt-1">
-                  {project.tagline}
-                </p>
-              )}
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-2 rounded-xl bg-slate-900 border border-slate-700 hover:border-cyan-400 text-slate-400 hover:text-white transition-colors"
+            className="p-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-400 hover:text-white transition-colors"
           >
-            <X className="w-6 h-6" />
+            <X className="w-5 h-5" />
           </button>
         </div>
 
-        <p className="text-slate-300 leading-relaxed text-base md:text-lg mb-8 font-sans">
+        <p className="text-slate-300 leading-relaxed text-base mb-8 font-sans">
           {project.description}
         </p>
 
-        {/* GitHub Link */}
         {project.github && (
-          <motion.a
+          <a
             href={project.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-3 p-4 mb-8 bg-slate-950 border border-cyan-500/30 rounded-2xl hover:border-cyan-400 transition-all group"
+            className="flex items-center gap-3 p-4 mb-8 bg-slate-900/90 border border-slate-800 rounded-2xl hover:border-cyan-500/40 transition-all group"
           >
-            <Code2 className="w-6 h-6 text-cyan-400 group-hover:rotate-12 transition-transform" />
-            <div className="flex-1">
+            <Code2 className="w-5 h-5 text-cyan-400" />
+            <div className="flex-1 min-w-0">
               <div className="text-xs text-slate-500 font-mono">Source Repository</div>
-              <div className="text-sm font-mono text-cyan-300 font-bold group-hover:text-white">
+              <div className="text-sm font-mono text-cyan-300 font-semibold truncate">
                 {project.github}
               </div>
             </div>
-            <ExternalLink className="w-5 h-5 text-cyan-400 group-hover:translate-x-1 transition-transform" />
-          </motion.a>
+            <ExternalLink className="w-4 h-4 text-cyan-400 group-hover:translate-x-1 transition-transform" />
+          </a>
         )}
 
         <div className="mb-8">
-          <h4 className="font-orbitron text-lg font-bold text-cyan-400 mb-4 flex items-center gap-2">
-            <Shield className="w-5 h-5" />
-            KEY TECHNICAL FEATURES
+          <h4 className="text-base font-sans font-bold text-white mb-4 flex items-center gap-2">
+            <Shield className="w-4 h-4 text-cyan-400" />
+            Key Features
           </h4>
           <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {project.highlights.map((highlight: string, i: number) => (
               <li
                 key={i}
-                className="flex items-start gap-2.5 p-3 rounded-xl bg-slate-950 border border-slate-800 text-xs md:text-sm text-slate-300 font-sans"
+                className="flex items-start gap-2.5 p-3 rounded-xl bg-slate-900/60 border border-slate-800 text-xs text-slate-300"
               >
                 <span className="text-cyan-400 font-bold mt-0.5">▸</span>
                 <span>{highlight}</span>
@@ -575,14 +543,14 @@ function ProjectModal({ project, onClose }: any) {
         </div>
 
         <div>
-          <h4 className="font-orbitron text-lg font-bold text-cyan-400 mb-4">
-            TECHNOLOGIES & TOOLS USED
+          <h4 className="text-base font-sans font-bold text-white mb-4">
+            Technologies Used
           </h4>
           <div className="flex flex-wrap gap-2">
             {project.tech.map((tech: string, i: number) => (
               <span
                 key={i}
-                className="px-3.5 py-1.5 bg-slate-950 border border-cyan-500/30 rounded-xl text-xs md:text-sm font-mono text-cyan-200"
+                className="px-3 py-1.5 bg-slate-900 border border-slate-800 rounded-xl text-xs font-mono text-cyan-300"
               >
                 {tech}
               </span>

@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Terminal, CornerDownLeft, Shield, Sparkles, RefreshCw } from 'lucide-react';
+import { Terminal, CornerDownLeft, RefreshCw } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
 
 interface HistoryItem {
@@ -39,11 +39,11 @@ export function TerminalConsole() {
     switch (cmd) {
       case 'help':
         outputResult = (
-          <div className="space-y-1 text-cyan-300 font-mono">
+          <div className="space-y-1 text-cyan-300 font-mono text-xs">
             <p className="text-white font-bold mb-1">AVAILABLE COMMANDS:</p>
             <p><span className="text-purple-400 font-bold">whoami</span> — Display operator identity profile</p>
             <p><span className="text-purple-400 font-bold">certs</span> — List active security certifications</p>
-            <p><span className="text-purple-400 font-bold">skills</span> — Display core offensive & defensive skill matrix</p>
+            <p><span className="text-purple-400 font-bold">skills</span> — Display core offensive skill matrix</p>
             <p><span className="text-purple-400 font-bold">projects</span> — Summary of flagship security projects</p>
             <p><span className="text-purple-400 font-bold">contact</span> — Get direct contact links</p>
             <p><span className="text-purple-400 font-bold">clear</span> — Clear terminal output history</p>
@@ -52,19 +52,18 @@ export function TerminalConsole() {
         break;
 
       case 'whoami':
-        outputResult = 'Vishesh Ranjan // Ethical Hacker & Security Researcher. Expertise in Pentesting, Exploitation, Red Teaming, and Network Architecture.';
+        outputResult = 'Vishesh Ranjan // Ethical Hacker & Security Specialist. Expertise in Pentesting, Exploitation, Red Teaming, and Network Architecture.';
         break;
 
       case 'certs':
         outputResult = (
-          <div className="space-y-1 font-mono text-cyan-300">
+          <div className="space-y-1 font-mono text-xs text-cyan-300">
             <p className="text-white font-bold">ACTIVE CERTIFICATIONS:</p>
             <p>✓ <span className="text-amber-400 font-bold">OSCP</span> — Offensive Security Certified Professional</p>
             <p>✓ <span className="text-cyan-400 font-bold">CCIE</span> — Cisco Certified Internetwork Expert</p>
             <p>✓ <span className="text-purple-400 font-bold">eJPT</span> — eLearnSecurity Junior Penetration Tester</p>
             <p>✓ <span className="text-blue-400 font-bold">CyberOps</span> — Cisco Certified CyberOps Associate</p>
             <p>✓ <span className="text-emerald-400 font-bold">Ethical Hacker</span> — Cisco Networking Academy</p>
-            <p className="text-purple-300 italic pt-1">⚡ And many more in progress...</p>
           </div>
         );
         break;
@@ -75,7 +74,7 @@ export function TerminalConsole() {
 
       case 'projects':
         outputResult = (
-          <div className="space-y-1 font-mono text-cyan-300">
+          <div className="space-y-1 font-mono text-xs text-cyan-300">
             <p className="text-white font-bold">FLAGSHIP PROJECTS (18 Total):</p>
             <p>1. <span className="text-purple-400 font-bold">GoodFellas</span> — Tor-routed Zero-Knowledge Anonymous Encrypted Messenger</p>
             <p>2. <span className="text-cyan-400 font-bold">Phishing Framework</span> — Automated Security Awareness Campaign Engine</p>
@@ -108,24 +107,30 @@ export function TerminalConsole() {
     <section id="terminal-section" className="relative py-16 md:py-24 px-4 sm:px-6">
       <div className="max-w-4xl mx-auto relative z-10">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
+          viewport={{ once: false, amount: 0.3 }}
+          transition={{ duration: 0.7 }}
           className="text-center mb-8"
         >
-          <span className="font-mono text-xs text-cyan-400 font-bold uppercase tracking-widest px-3.5 py-1.5 rounded-full bg-cyan-950/60 border border-cyan-500/30 mb-3 inline-flex items-center gap-2 shadow-[0_0_15px_rgba(6,182,212,0.2)]">
+          <span className="font-mono text-xs text-cyan-400 font-bold uppercase tracking-widest px-3.5 py-1.5 rounded-full bg-cyan-950/60 border border-cyan-500/30 mb-3 inline-flex items-center gap-2">
             <Terminal className="w-3.5 h-3.5 text-cyan-400" />
             Interactive Security Console
           </span>
-          <h2 className="text-3xl sm:text-4xl font-mono font-bold text-white">
-            OPERATOR COMMAND SHELL
+          <h2 className="text-2xl sm:text-4xl font-sans font-bold text-white">
+            Operator Shell
           </h2>
         </motion.div>
 
         {/* Cyber Window Container */}
-        <div className="rounded-2xl bg-slate-950/95 border border-cyan-500/40 overflow-hidden shadow-[0_0_40px_rgba(6,182,212,0.2)] backdrop-blur-2xl">
-          {/* Window Header */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: false, amount: 0.3 }}
+          transition={{ duration: 0.6 }}
+          className="minimal-glass rounded-2xl overflow-hidden shadow-2xl"
+        >
+          {/* Header */}
           <div className="px-4 py-3 bg-slate-900/90 border-b border-slate-800 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <span className="w-3 h-3 rounded-full bg-red-500/80 inline-block" />
@@ -142,22 +147,22 @@ export function TerminalConsole() {
             </button>
           </div>
 
-          {/* Quick Command Buttons */}
+          {/* Quick Buttons */}
           <div className="p-3 bg-slate-900/40 border-b border-slate-800/80 flex flex-wrap gap-2">
             <span className="text-[11px] font-mono text-slate-500 py-1 font-semibold">Quick Exec:</span>
             {['help', 'whoami', 'certs', 'skills', 'projects', 'contact'].map((btnCmd) => (
               <button
                 key={btnCmd}
                 onClick={() => handleCommand(btnCmd)}
-                className="px-2.5 py-0.5 rounded-lg bg-slate-900 border border-cyan-500/30 hover:border-cyan-400 font-mono text-xs text-cyan-300 hover:text-white transition-all shadow-sm"
+                className="px-2.5 py-0.5 rounded-lg bg-slate-900 border border-slate-800 hover:border-cyan-500/40 font-mono text-xs text-cyan-300 hover:text-white transition-all"
               >
                 ${btnCmd}
               </button>
             ))}
           </div>
 
-          {/* Terminal Console Output */}
-          <div className="p-4 md:p-6 font-mono text-xs md:text-sm max-h-[380px] overflow-y-auto space-y-3">
+          {/* Console Output */}
+          <div className="p-4 md:p-6 font-mono text-xs md:text-sm max-h-[350px] overflow-y-auto space-y-3">
             {history.map((item, index) => (
               <div key={index} className="space-y-1">
                 <div className="flex items-center gap-2 text-cyan-400">
@@ -166,14 +171,13 @@ export function TerminalConsole() {
                 </div>
                 <div className={`pl-4 ${
                   item.type === 'error' ? 'text-red-400' :
-                  item.type === 'success' ? 'text-emerald-400 font-bold' : 'text-gray-300'
+                  item.type === 'success' ? 'text-emerald-400 font-bold' : 'text-slate-300'
                 }`}>
                   {item.output}
                 </div>
               </div>
             ))}
 
-            {/* Input prompt line */}
             <form
               onSubmit={(e) => {
                 e.preventDefault();
@@ -196,7 +200,7 @@ export function TerminalConsole() {
 
             <div ref={bottomRef} />
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
