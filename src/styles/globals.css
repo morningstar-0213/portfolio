@@ -4,67 +4,117 @@
 
 @layer base {
   :root {
-    --font-mono: 'JetBrains Mono', monospace;
-    --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+    --c-bg:        #050810;
+    --c-surface:   #090d1a;
+    --c-card:      #0d1224;
+    --c-orange:    #f97316;
+    --c-amber:     #f59e0b;
+    --c-text:      #e2e8f0;
+    --c-muted:     #64748b;
+    --c-border:    rgba(249,115,22,0.18);
   }
 
-  html, body {
+  html {
     scroll-behavior: smooth;
-    background-color: #030610;
-    color: #f8fafc;
-    font-family: var(--font-sans);
-    overflow-x: hidden;
-    max-width: 100vw;
   }
+
+  body {
+    background-color: var(--c-bg);
+    color: var(--c-text);
+    font-family: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  * { box-sizing: border-box; }
 }
 
-/* Command Matrix Glass Cards */
-.matrix-glass {
-  background: rgba(8, 14, 28, 0.7);
-  border: 1px solid rgba(16, 185, 129, 0.15);
-  backdrop-filter: blur(20px);
-  box-shadow: 0 12px 40px -10px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.05);
-  transition: all 0.3s ease;
+/* ── Fonts ─────────────────────────────────────────── */
+.font-mono-display { font-family: 'Space Mono', monospace; }
+
+/* ── Cards ─────────────────────────────────────────── */
+.card {
+  background: rgba(13, 18, 36, 0.8);
+  border: 1px solid rgba(255,255,255,0.06);
+  backdrop-filter: blur(16px);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+.card:hover {
+  border-color: rgba(249,115,22,0.4);
+  box-shadow: 0 8px 48px rgba(249,115,22,0.12), 0 2px 16px rgba(0,0,0,0.4);
+  transform: translateY(-3px);
 }
 
-.matrix-glass:hover {
-  border-color: rgba(16, 185, 129, 0.5);
-  box-shadow: 0 20px 50px -12px rgba(16, 185, 129, 0.2), inset 0 1px 0 rgba(16, 185, 129, 0.2);
+/* ── Orange Glow ────────────────────────────────────── */
+.orange-glow {
+  box-shadow: 0 0 30px rgba(249,115,22,0.4), 0 0 80px rgba(249,115,22,0.15);
+}
+.amber-glow {
+  box-shadow: 0 0 30px rgba(245,158,11,0.35), 0 0 80px rgba(245,158,11,0.12);
 }
 
-/* Active Cyber Card Glow */
-.matrix-glass-active {
-  background: rgba(12, 22, 44, 0.85);
-  border: 1px solid rgba(16, 185, 129, 0.6);
-  box-shadow: 0 0 30px rgba(16, 185, 129, 0.25);
+/* ── Section Label ──────────────────────────────────── */
+.section-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #f97316;
+  opacity: 0.85;
 }
 
-/* Glowing Neon Utility */
-.text-neon-emerald {
-  color: #10b981;
-  text-shadow: 0 0 12px rgba(16, 185, 129, 0.6);
+/* ── Noise overlay (cinematic grain) ────────────────── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 999;
+  opacity: 0.5;
 }
 
-.text-neon-cyan {
-  color: #06b6d4;
-  text-shadow: 0 0 12px rgba(6, 182, 212, 0.6);
+/* ── Scrollbar ──────────────────────────────────────── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: #050810; }
+::-webkit-scrollbar-thumb { background: rgba(249,115,22,0.3); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #f97316; }
+
+/* ── Grid background ────────────────────────────────── */
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(249,115,22,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(249,115,22,0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
 }
 
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
+/* ── Parallax container ─────────────────────────────── */
+.parallax-container {
+  transform-style: preserve-3d;
+  perspective: 1000px;
 }
 
-::-webkit-scrollbar-track {
-  background: #030610;
+/* ── Badge ──────────────────────────────────────────── */
+.badge {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  padding: 3px 10px;
+  border-radius: 99px;
+  border: 1px solid rgba(249,115,22,0.35);
+  color: #f97316;
+  background: rgba(249,115,22,0.08);
 }
 
-::-webkit-scrollbar-thumb {
-  background: #0f172a;
-  border: 1px solid #10b981;
-  border-radius: 3px;
+/* ── Horizontal rule ────────────────────────────────── */
+.h-rule {
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(249,115,22,0.3), transparent);
+  margin: 0;
+  border: none;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #10b981;
+/* ── Mobile padding for left rail ───────────────────── */
+@media (min-width: 768px) {
+  .rail-offset { padding-left: 64px; }
 }

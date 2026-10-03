@@ -1,539 +1,308 @@
-import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Shield, Mail, Wifi, Smartphone, Key, Lock, 
-  MessageSquare, Globe, Database, Server, 
+import { useRef, useState } from 'react';
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import {
+  Shield, Mail, Wifi, Smartphone, Key, Lock,
+  MessageSquare, Globe, Database, Server,
   Terminal, Fingerprint, AlertTriangle,
-  Radio, FileText, Unlock, Network, WifiOff, ExternalLink, X, Instagram, ShieldAlert
+  Radio, FileText, Unlock, Network, WifiOff,
+  X, Instagram, ChevronRight,
 } from 'lucide-react';
-import { useState, useEffect } from 'react';
 
 const projects = [
-  {
-    id: 1,
-    icon: MessageSquare,
-    title: 'GoodFellas',
-    category: 'Flagship Security System',
-    tagline: 'More secure than Telegram',
+  { id: 1, icon: MessageSquare, title: 'GoodFellas', category: 'Secure Messaging', tagline: 'More secure than Telegram', featured: true,
     description: 'An ultra-secure encrypted messaging platform with complete darknet anonymity and zero metadata retention.',
     highlights: [
       'All traffic routed through Tor darknet for total IP anonymization',
       'End-to-end encryption using AES-256 with perfect forward secrecy',
-      'Zero-knowledge architecture - even server admins cannot decrypt messages',
+      'Zero-knowledge architecture — even server admins cannot read messages',
       'Decentralized node network preventing single points of failure',
       'Ephemeral messaging with automated self-destruct timer',
-      'No metadata logging - IP addresses, timestamps, and user identities are completely omitted',
+      'No metadata logging — IPs, timestamps, and identities completely omitted',
     ],
     tech: ['Tor Network', 'AES-256', 'Python', 'WebRTC', 'P2P', 'Zero-Knowledge'],
-    featured: true,
   },
-  {
-    id: 2,
-    icon: Mail,
-    title: 'Phishing Framework',
-    category: 'Social Engineering',
+  { id: 2, icon: Mail, title: 'Phishing Framework', category: 'Social Engineering',
     description: 'Advanced phishing page generator for authorized security awareness training.',
-    highlights: [
-      'Dynamic page cloning for realistic replica creation',
-      'HTTPS support with automated SSL certificate generation',
-      'Real-time credential capture dashboard with analytics',
-      'Email template engine with customizable pretext scenarios',
-      'Campaign tracking and success rate metrics',
-      'Integration with security awareness training programs',
-    ],
-    tech: ['PHP', 'JavaScript', 'Let\'s Encrypt', 'SMTP', 'HTML/CSS'],
+    highlights: ['Dynamic page cloning','HTTPS support with SSL','Real-time credential dashboard','Email template engine','Campaign tracking'],
+    tech: ['PHP', 'JavaScript', 'Let\'s Encrypt', 'SMTP'],
   },
-  {
-    id: 3,
-    icon: WifiOff,
-    title: 'Network Jammer',
-    category: 'Wireless Security',
+  { id: 3, icon: WifiOff, title: 'Network Jammer', category: 'Wireless Security',
     description: 'WiFi deauthentication and network disruption testing tool.',
-    highlights: [
-      'Automated deauthentication attack implementation',
-      'Support for multiple wireless protocols (802.11 a/b/g/n/ac)',
-      'Selective client disconnection capabilities',
-      'Channel hopping for comprehensive coverage',
-      'Real-time packet injection monitoring',
-      'Evil twin AP detection and prevention testing',
-    ],
-    tech: ['Python', 'Scapy', 'Aircrack-ng', 'Monitor Mode', 'Packet Injection'],
+    highlights: ['Automated deauthentication attacks','Multi-protocol support (802.11 a/b/g/n/ac)','Selective client disconnection','Channel hopping'],
+    tech: ['Python', 'Scapy', 'Aircrack-ng', 'Packet Injection'],
   },
-  {
-    id: 4,
-    icon: Smartphone,
-    title: 'Android RAT Suite',
-    category: 'Mobile Security',
+  { id: 4, icon: Smartphone, title: 'Android RAT Suite', category: 'Mobile Security',
     description: 'Remote administration toolkit for Android security audits and penetration testing.',
-    highlights: [
-      'Complete device surveillance including camera, microphone, and location',
-      'Keylogger functionality for credential harvesting',
-      'SMS and call log extraction with cloud sync',
-      'File system access and remote file management',
-      'Screen recording and screenshot capture',
-      'Persistence mechanisms and anti-removal protection',
-    ],
-    tech: ['Java', 'Android SDK', 'WebSocket', 'ADB', 'Node.js'],
+    highlights: ['Camera/mic/location surveillance','Keylogger & credential harvesting','SMS/call log extraction','Screen recording'],
+    tech: ['Java', 'Android SDK', 'WebSocket', 'ADB'],
   },
-  {
-    id: 5,
-    icon: Key,
-    title: 'Multi-Protocol Bruteforcer',
-    category: 'Password Attacks',
+  { id: 5, icon: Key, title: 'Multi-Protocol Bruteforcer', category: 'Password Attacks',
     description: 'High-performance authentication test and password attack framework.',
-    highlights: [
-      'Support for SSH, FTP, HTTP, RDP, SMTP, and database protocols',
-      'Multi-threaded architecture for maximum execution speed',
-      'Dictionary attacks with custom rule-based mutations',
-      'Hybrid attacks combining wordlists and brute force',
-      'Proxy rotation and rate-limiting bypass algorithms',
-      'Progress state saving and resume capabilities',
-    ],
-    tech: ['Python', 'Hydra', 'Threading', 'Regex', 'Socket Programming'],
+    highlights: ['SSH/FTP/HTTP/RDP/SMTP support','Multi-threaded architecture','Dictionary + rule mutations','Proxy rotation & bypass'],
+    tech: ['Python', 'Hydra', 'Threading', 'Socket Programming'],
   },
-  {
-    id: 6,
-    icon: Terminal,
-    title: 'Advanced Keylogger',
-    category: 'Surveillance & Audit',
+  { id: 6, icon: Terminal, title: 'Advanced Keylogger', category: 'Surveillance & Audit',
     description: 'Stealthy keystroke logging and monitoring system for security research.',
-    highlights: [
-      'Kernel-level hook implementation for transparent operation',
-      'Clipboard monitoring and screenshot capture on trigger events',
-      'Application-specific logging with contextual window titles',
-      'Encrypted log transmission to C2 server',
-      'Anti-debugging and VM detection mechanisms',
-      'Automatic startup persistence across reboots',
-    ],
-    tech: ['C++', 'Windows API', 'Hooks', 'AES Encryption', 'Registry'],
+    highlights: ['Kernel-level hook implementation','Clipboard & screenshot capture','Encrypted C2 transmission','Anti-debugging mechanisms'],
+    tech: ['C++', 'Windows API', 'AES Encryption', 'Registry'],
   },
-  {
-    id: 7,
-    icon: Lock,
-    title: 'Message Encryptor/Decryptor',
-    category: 'Cryptography',
+  { id: 7, icon: Lock, title: 'Message Encryptor', category: 'Cryptography',
     description: 'Military-grade encryption utility for secure data communications.',
-    highlights: [
-      'Multiple cipher support: AES-256, RSA-4096, Blowfish, ChaCha20',
-      'Public key infrastructure (PKI) for secure key generation',
-      'Encrypted payload formatting with base-64 encoding',
-      'File encryption with integrated LZMA compression',
-      'Secure key exchange using Diffie-Hellman protocol',
-      'Password-based key derivation with PBKDF2',
-    ],
-    tech: ['Python', 'PyCrypto', 'OpenSSL', 'Base64', 'AES-256'],
+    highlights: ['AES-256, RSA-4096, ChaCha20 support','PKI key generation','PBKDF2 key derivation','File encryption + LZMA compression'],
+    tech: ['Python', 'PyCrypto', 'OpenSSL', 'AES-256'],
   },
-  {
-    id: 8,
-    icon: Globe,
-    title: 'Web Application Scanner',
-    category: 'Web Security',
-    description: 'Automated vulnerability scanner tailored for web applications and REST APIs.',
-    highlights: [
-      'OWASP Top 10 vulnerability detection engine',
-      'SQL injection testing with multiple payload variations',
-      'XSS detection (reflected, stored, and DOM-based)',
-      'Directory traversal and local/remote file inclusion audit',
-      'Automated crawling with headless browser JS execution',
-      'Detailed vulnerability reports with PoC reproduction steps',
-    ],
-    tech: ['Python', 'Selenium', 'BeautifulSoup', 'Requests', 'SQLMap'],
+  { id: 8, icon: Globe, title: 'Web App Scanner', category: 'Web Security',
+    description: 'Automated vulnerability scanner for web applications and REST APIs.',
+    highlights: ['OWASP Top 10 detection','SQL injection payloads','XSS detection (stored/DOM/reflected)','Automated crawling with JS execution'],
+    tech: ['Python', 'Selenium', 'BeautifulSoup', 'SQLMap'],
   },
-  {
-    id: 9,
-    icon: Database,
-    title: 'SQL Injection Toolkit',
-    category: 'Exploitation',
+  { id: 9, icon: Database, title: 'SQL Injection Toolkit', category: 'Exploitation',
     description: 'Advanced SQL injection discovery and data extraction framework.',
-    highlights: [
-      'Automated database fingerprinting and structure detection',
-      'Blind SQL injection using time-based and boolean techniques',
-      'Database enumeration (tables, columns, credentials)',
-      'Data exfiltration with custom encoding methods',
-      'WAF bypass using obfuscation techniques',
-      'Command execution and shell upload capabilities',
-    ],
-    tech: ['Python', 'SQLMap', 'MySQL', 'PostgreSQL', 'MSSQL'],
+    highlights: ['DB fingerprinting','Blind SQL (time-based/boolean)','WAF bypass via obfuscation','Data exfiltration with custom encoding'],
+    tech: ['Python', 'SQLMap', 'MySQL', 'MSSQL'],
   },
-  {
-    id: 10,
-    icon: Server,
-    title: 'Command & Control Server',
-    category: 'Red Team Operations',
+  { id: 10, icon: Server, title: 'C2 Server', category: 'Red Team',
     description: 'Centralized infrastructure for agent management and red team simulation.',
-    highlights: [
-      'Multi-protocol C2 communication channels (HTTP, DNS, ICMP)',
-      'Encrypted C2 traffic with custom protocol wrappers',
-      'Web dashboard for real-time host management and tasking',
-      'Modular plugin architecture for custom capability deployment',
-      'Automated agent payload generation',
-      'Domain fronting and traffic obfuscation capabilities',
-    ],
-    tech: ['Python', 'Flask', 'WebSocket', 'SQLite', 'AES Encryption'],
+    highlights: ['HTTP/DNS/ICMP C2 channels','Encrypted traffic with custom wrappers','Web dashboard for host management','Domain fronting'],
+    tech: ['Python', 'Flask', 'WebSocket', 'SQLite'],
   },
-  {
-    id: 11,
-    icon: Terminal,
-    title: 'Reverse Shell Generator',
-    category: 'Exploitation',
+  { id: 11, icon: Terminal, title: 'Reverse Shell Generator', category: 'Exploitation',
     description: 'Multi-platform reverse shell payload generator for pentesting assessments.',
-    highlights: [
-      'Cross-platform payload generation (Windows, Linux, macOS)',
-      'Obfuscated payloads designed to bypass antivirus signatures',
-      'Multiple connection methods (TCP, UDP, HTTPS, DNS)',
-      'Polymorphic code generation engine',
-      'Metasploit / Meterpreter handler integration',
-      'One-liner command generation for rapid deployment',
-    ],
-    tech: ['Python', 'Metasploit', 'PowerShell', 'Bash', 'Netcat'],
+    highlights: ['Windows/Linux/macOS payloads','AV bypass obfuscation','TCP/UDP/HTTPS/DNS connections','Polymorphic code generation'],
+    tech: ['Python', 'Metasploit', 'PowerShell', 'Bash'],
   },
-  {
-    id: 12,
-    icon: Fingerprint,
-    title: 'OSINT Reconnaissance Framework',
-    category: 'Information Gathering',
-    description: 'Comprehensive open-source intelligence gathering and target mapping framework.',
-    highlights: [
-      'Automated subdomain enumeration and DNS record scouting',
-      'Social media profile aggregation and footprint mapping',
-      'Email harvesting across public breach indices',
-      'WHOIS and domain registration data extraction',
-      'Document and image metadata (EXIF) parser',
-      'Visual target graph mapping and report generator',
-    ],
-    tech: ['Python', 'APIs', 'Web Scraping', 'Shodan', 'TheHarvester'],
+  { id: 12, icon: Fingerprint, title: 'OSINT Framework', category: 'Reconnaissance',
+    description: 'Comprehensive open-source intelligence gathering and target mapping.',
+    highlights: ['Subdomain enumeration','Social media footprint mapping','Email harvesting from breach indices','WHOIS & EXIF parsing'],
+    tech: ['Python', 'APIs', 'Web Scraping', 'Shodan'],
   },
-  {
-    id: 13,
-    icon: AlertTriangle,
-    title: 'Exploit Development Kit',
-    category: 'Vulnerability Research',
+  { id: 13, icon: AlertTriangle, title: 'Exploit Dev Kit', category: 'Vuln Research',
     description: 'Framework for binary analysis, ROP chain construction, and exploit prototyping.',
-    highlights: [
-      'Buffer overflow exploit template generator',
-      'ROP chain builder and gadget searching utility',
-      'Custom shellcode encoder and decoder utilities',
-      'Fuzzing framework for binary vulnerability discovery',
-      'Debugger integration (GDB / Radare2)',
-      'Cross-platform binary exploitation suite',
-    ],
-    tech: ['Python', 'Assembly (x86/x64)', 'GDB', 'Pwntools', 'Radare2'],
+    highlights: ['Buffer overflow templates','ROP chain builder','Custom shellcode encoder','Fuzzing framework'],
+    tech: ['Python', 'Assembly (x86/x64)', 'GDB', 'Pwntools'],
   },
-  {
-    id: 14,
-    icon: Radio,
-    title: 'Packet Sniffer & Analyzer',
-    category: 'Network Analysis',
+  { id: 14, icon: Radio, title: 'Packet Analyzer', category: 'Network Analysis',
     description: 'Real-time packet inspection and network traffic analyzer.',
-    highlights: [
-      'Deep packet inspection with multi-protocol dissection',
-      'TLS traffic analysis and certificate validation',
-      'Credential extraction from unencrypted protocol streams',
-      'Network topology mapping and host discovery',
-      'Custom rule-based intrusion detection engine',
-      'PCAP file import/export for detailed post-capture audits',
-    ],
-    tech: ['Python', 'Scapy', 'Wireshark', 'libpcap', 'NetworkX'],
+    highlights: ['Deep packet inspection','TLS traffic analysis','Credential extraction from streams','Custom IDS rule engine'],
+    tech: ['Python', 'Scapy', 'Wireshark', 'libpcap'],
   },
-  {
-    id: 15,
-    icon: FileText,
-    title: 'Password Hash Cracker',
-    category: 'Cryptanalysis',
+  { id: 15, icon: FileText, title: 'Hash Cracker', category: 'Cryptanalysis',
     description: 'GPU-accelerated password hash cracking and audit utility.',
-    highlights: [
-      'Support for MD5, SHA-1, SHA-256, NTLM, and bcrypt hashes',
-      'GPU acceleration using CUDA and OpenCL modules',
-      'Rainbow table generation and lookup engine',
-      'Dictionary attack engine with custom mutation rules',
-      'Distributed multi-node hash cracking capability',
-      'Real-time hash rate and ETA calculations',
-    ],
-    tech: ['Python', 'Hashcat', 'John the Ripper', 'CUDA', 'Rainbow Tables'],
+    highlights: ['MD5/SHA/NTLM/bcrypt support','GPU acceleration (CUDA/OpenCL)','Rainbow table lookup','Distributed cracking capability'],
+    tech: ['Python', 'Hashcat', 'John the Ripper', 'CUDA'],
   },
-  {
-    id: 16,
-    icon: Unlock,
-    title: 'Credential Harvester',
-    category: 'Data Extraction',
+  { id: 16, icon: Unlock, title: 'Credential Harvester', category: 'Data Extraction',
     description: 'Automated credential extraction utility from local system stores.',
-    highlights: [
-      'Browser credential decryption (Chrome, Firefox, Edge)',
-      'Saved WiFi WPA2 key extraction',
-      'Windows LSASS memory credential parsing',
-      'SSH private key and configuration file harvesting',
-      'Session token and cookie extraction',
-      'Secure encrypted vault parsing',
-    ],
-    tech: ['Python', 'Mimikatz', 'LaZagne', 'SQLite', 'DPAPI'],
+    highlights: ['Browser credential decryption','WiFi WPA2 key extraction','LSASS memory parsing','SSH key harvesting'],
+    tech: ['Python', 'Mimikatz', 'LaZagne', 'DPAPI'],
   },
-  {
-    id: 17,
-    icon: Network,
-    title: 'ARP Spoofing Suite',
-    category: 'MITM Attacks',
+  { id: 17, icon: Network, title: 'ARP Spoofing Suite', category: 'MITM',
     description: 'Man-in-the-middle attack framework for local network auditing.',
-    highlights: [
-      'Automated ARP cache poisoning engine',
-      'SSL stripping module for HTTPS connection auditing',
-      'Real-time packet modification and payload injection',
-      'DNS spoofing for phishing redirect simulations',
-      'Session hijacking and cookie capture dashboard',
-      'Traffic flow logging and connection graphs',
-    ],
-    tech: ['Python', 'Scapy', 'Ettercap', 'SSLStrip', 'iptables'],
+    highlights: ['ARP cache poisoning','SSL stripping module','DNS spoofing redirect','Session hijacking dashboard'],
+    tech: ['Python', 'Scapy', 'Ettercap', 'SSLStrip'],
   },
-  {
-    id: 18,
-    icon: Wifi,
-    title: 'WPA/WPA2 Audit Tool',
-    category: 'Wireless Security',
+  { id: 18, icon: Wifi, title: 'WPA/WPA2 Audit Tool', category: 'Wireless Security',
     description: 'Wireless security testing suite for key recovery and handshake analysis.',
-    highlights: [
-      'Automated 4-way EAPOL handshake capture',
-      'Dictionary and rule-based brute force attack modes',
-      'GPU acceleration integration with Hashcat',
-      'WPS PIN vulnerability detection (Reaver integration)',
-      'Clientless PMKID attack implementation',
-      'Custom wordlist generation from targeted OSINT',
-    ],
-    tech: ['Python', 'Aircrack-ng', 'Hashcat', 'Reaver', 'Cowpatty'],
+    highlights: ['4-way EAPOL handshake capture','GPU-accelerated cracking','WPS PIN vulnerability detection','PMKID attack implementation'],
+    tech: ['Python', 'Aircrack-ng', 'Hashcat', 'Reaver'],
   },
 ];
 
-export function Projects() {
-  const [selectedProject, setSelectedProject] = useState<number | null>(null);
-  const [filter, setFilter] = useState<string>('all');
-  const [isMobile, setIsMobile] = useState(false);
+type Project = typeof projects[0];
 
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
-  const categories = ['all', ...Array.from(new Set(projects.map(p => p.category)))];
-
-  const filteredProjects = filter === 'all' 
-    ? projects 
-    : projects.filter(p => p.category === filter);
+/* ── Project card ── */
+function ProjectCard({ project, index }: { project: Project; index: number }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start 0.92', 'end 0.55'] });
+  const fromLeft = index % 2 === 0;
+  const x       = useTransform(scrollYProgress, [0, 0.55], [fromLeft ? -50 : 50, 0]);
+  const opacity  = useTransform(scrollYProgress, [0, 0.4], [0, 1]);
+  const [hovered, setHovered] = useState(false);
 
   return (
-    <section id="projects" className="relative py-20 md:py-32 px-4 overflow-hidden">
-      <div className="max-w-5xl mx-auto relative z-10">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 25 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false, amount: 0.2 }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-16 md:mb-20"
-        >
-          <span className="font-mono text-xs text-emerald-400 font-semibold uppercase tracking-widest px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 mb-3 inline-block">
-            Project Matrix
-          </span>
-          <h2 className="text-2xl sm:text-4xl md:text-5xl font-sans font-extrabold text-white mb-3 tracking-tight">
-            Security Projects & Tools
-          </h2>
-          <p className="text-slate-400 text-sm sm:text-base max-w-xl mx-auto font-sans">
-            18 specialized tools and projects demonstrating offensive security techniques, red team tooling, and encryption protocols
-          </p>
-        </motion.div>
+    <motion.div
+      ref={ref}
+      style={{ x, opacity }}
+      className="card rounded-2xl p-5 flex flex-col gap-4 cursor-pointer relative overflow-hidden"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      {project.featured && (
+        <div className="absolute top-3 right-3 badge text-[9px]">FLAGSHIP</div>
+      )}
 
-        {/* Category Filters */}
-        <div className="flex flex-wrap justify-center gap-2 mb-10">
-          {categories.map((cat, index) => (
-            <button
-              key={cat}
-              onClick={() => setFilter(cat)}
-              className={`px-3 py-1.5 rounded-xl text-xs font-mono transition-all ${
-                filter === cat
-                  ? 'bg-emerald-500 text-slate-950 font-bold shadow-lg shadow-emerald-500/20'
-                  : 'bg-slate-900/80 text-slate-400 hover:text-white border border-slate-800'
-              }`}
-            >
-              {cat === 'all' ? 'All Projects' : cat}
-            </button>
-          ))}
+      <div className="flex items-center gap-3">
+        <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0
+          bg-orange-500/10 border border-orange-500/20">
+          <project.icon size={18} className="text-orange-400" />
         </div>
-
-        {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {filteredProjects.map((project, index) => {
-            const isLeft = index % 2 === 0;
-
-            return (
-              <motion.div
-                key={project.id}
-                initial={{ 
-                  opacity: 0, 
-                  x: isMobile ? 0 : isLeft ? -50 : 50,
-                  y: isMobile ? 25 : 0 
-                }}
-                whileInView={{ opacity: 1, x: 0, y: 0 }}
-                viewport={{ once: false, amount: 0.2 }}
-                transition={{ duration: 0.5, ease: 'easeOut' }}
-                onClick={() => setSelectedProject(project.id)}
-                className="luxury-glass relative rounded-2xl p-5 md:p-7 cursor-pointer hover:border-emerald-500/40 transition-all group flex flex-col justify-between"
-              >
-                {project.featured && (
-                  <div className="absolute top-4 right-4 px-2.5 py-0.5 bg-emerald-500/10 border border-emerald-500/30 rounded-full font-mono text-[10px] font-semibold text-emerald-300">
-                    FLAGSHIP
-                  </div>
-                )}
-
-                <div>
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-emerald-400 group-hover:border-emerald-500/40 transition-colors">
-                      <project.icon className="w-6 h-6" />
-                    </div>
-                  </div>
-
-                  <span className="text-xs text-emerald-400 font-mono font-semibold">{project.category}</span>
-                  <h3 className="text-lg md:text-xl font-sans font-bold text-white mt-1 mb-1 group-hover:text-emerald-300 transition-colors">
-                    {project.title}
-                  </h3>
-                  {project.tagline && (
-                    <p className="text-purple-300 text-xs italic font-mono mb-2">{project.tagline}</p>
-                  )}
-                  <p className="text-slate-300 text-xs md:text-sm leading-relaxed font-sans mb-5 line-clamp-3">
-                    {project.description}
-                  </p>
-                </div>
-
-                <div>
-                  <div className="flex flex-wrap gap-1.5 pt-3 border-t border-slate-800/80 mb-3">
-                    {project.tech.slice(0, 3).map((tech: string, i: number) => (
-                      <span
-                        key={i}
-                        className="px-2 py-0.5 bg-slate-900/80 border border-slate-800 rounded-md text-[11px] text-slate-300 font-mono"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                    {project.tech.length > 3 && (
-                      <span className="px-1.5 py-0.5 text-[11px] text-slate-500 font-mono font-semibold">
-                        +{project.tech.length - 3}
-                      </span>
-                    )}
-                  </div>
-
-                  <div className="text-emerald-400 group-hover:text-emerald-300 text-xs font-mono font-semibold inline-flex items-center gap-1">
-                    <span>View Details & Specs</span>
-                    <span className="group-hover:translate-x-1 transition-transform">→</span>
-                  </div>
-                </div>
-              </motion.div>
-            );
-          })}
+        <div>
+          <div className="font-mono-display text-[10px] text-orange-400/70 tracking-widest mb-0.5">
+            {project.category}
+          </div>
+          <h3 className="font-bold text-white text-sm">{project.title}</h3>
         </div>
       </div>
 
-      {/* Detail Modal */}
-      <AnimatePresence>
-        {selectedProject && (
-          <ProjectModal
-            project={projects.find(p => p.id === selectedProject)!}
-            onClose={() => setSelectedProject(null)}
-          />
+      {project.tagline && (
+        <p className="font-mono-display text-[11px] text-amber-400/70 italic">&ldquo;{project.tagline}&rdquo;</p>
+      )}
+
+      <p className="text-white/40 text-xs leading-relaxed line-clamp-2">{project.description}</p>
+
+      <div className="flex flex-wrap gap-1">
+        {project.tech.slice(0, 3).map(t => (
+          <span key={t} className="font-mono-display text-[9px] px-2 py-0.5 rounded bg-white/[0.04] border border-white/[0.06] text-white/35">{t}</span>
+        ))}
+        {project.tech.length > 3 && (
+          <span className="font-mono-display text-[9px] text-white/25">+{project.tech.length - 3}</span>
         )}
-      </AnimatePresence>
-    </section>
+      </div>
+
+      <div className={`flex items-center gap-1 font-mono-display text-[11px] text-orange-400 transition-all duration-200
+        ${hovered ? 'opacity-100 translate-x-0' : 'opacity-60 -translate-x-1'}`}>
+        <span>View details</span>
+        <ChevronRight size={12} />
+      </div>
+    </motion.div>
   );
 }
 
-function ProjectModal({ project, onClose }: any) {
+/* ── Detail modal ── */
+function Modal({ project, onClose }: { project: Project; onClose: () => void }) {
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       onClick={onClose}
-      className="fixed inset-0 bg-slate-950/90 backdrop-blur-md z-50 flex items-center justify-center p-4 md:p-6 overflow-y-auto"
+      className="fixed inset-0 z-50 bg-black/80 backdrop-blur-xl flex items-center justify-center p-4"
     >
       <motion.div
-        initial={{ scale: 0.9, y: 30, opacity: 0 }}
+        initial={{ scale: 0.92, y: 24, opacity: 0 }}
         animate={{ scale: 1, y: 0, opacity: 1 }}
-        exit={{ scale: 0.9, y: 30, opacity: 0 }}
-        transition={{ type: 'spring', stiffness: 200, damping: 25 }}
-        onClick={(e) => e.stopPropagation()}
-        className="luxury-glass rounded-3xl p-6 md:p-8 max-w-3xl w-full max-h-[90vh] overflow-y-auto my-8 relative"
+        exit={{ scale: 0.92, y: 24, opacity: 0 }}
+        transition={{ type: 'spring', stiffness: 260, damping: 28 }}
+        onClick={e => e.stopPropagation()}
+        className="card rounded-3xl p-6 md:p-8 max-w-2xl w-full max-h-[88vh] overflow-y-auto"
       >
-        <div className="flex items-start justify-between mb-6 border-b border-slate-800 pb-6">
-          <div className="flex items-center gap-4">
-            <div className="p-3.5 rounded-2xl bg-slate-900 border border-slate-800 text-emerald-400">
-              <project.icon className="w-8 h-8" />
+        {/* Header */}
+        <div className="flex items-start justify-between mb-6">
+          <div className="flex items-center gap-3">
+            <div className="w-12 h-12 rounded-2xl bg-orange-500/10 border border-orange-500/25 flex items-center justify-center">
+              <project.icon size={22} className="text-orange-400" />
             </div>
             <div>
-              <span className="text-xs text-emerald-400 font-mono font-semibold">{project.category}</span>
-              <h3 className="text-2xl font-sans font-bold text-white">
-                {project.title}
-              </h3>
+              <div className="font-mono-display text-[10px] text-orange-400/70 tracking-widest mb-0.5">{project.category}</div>
+              <h3 className="text-xl font-bold text-white">{project.title}</h3>
             </div>
           </div>
-          <button
-            onClick={onClose}
-            className="p-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-400 hover:text-white transition-colors"
-          >
-            <X className="w-5 h-5" />
+          <button onClick={onClose} className="p-2 rounded-xl border border-white/[0.08] text-white/40 hover:text-white transition-colors">
+            <X size={16} />
           </button>
         </div>
 
-        <p className="text-slate-300 leading-relaxed text-base mb-8 font-sans">
-          {project.description}
-        </p>
+        <p className="text-white/55 text-sm leading-relaxed mb-6">{project.description}</p>
 
-        {/* Private Repo - DM on IG button (NO GITHUB) */}
+        {/* Private repo card */}
         <a
           href="https://instagram.com/morningstar0213"
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-3 p-4 mb-8 bg-slate-900/90 border border-emerald-500/30 rounded-2xl hover:border-emerald-400 transition-all group"
+          onClick={e => e.stopPropagation()}
+          className="flex items-center gap-3 p-4 mb-6 rounded-2xl bg-orange-500/[0.07] border border-orange-500/25 hover:border-orange-400/50 transition-all group"
         >
-          <Instagram className="w-5 h-5 text-pink-400" />
+          <Instagram size={18} className="text-pink-400 shrink-0" />
           <div className="flex-1 min-w-0">
-            <div className="text-xs text-emerald-400 font-mono font-semibold">Private Repository</div>
-            <div className="text-xs md:text-sm font-sans text-slate-200 group-hover:text-white">
-              Code is confidential. DM on Instagram <span className="font-mono text-pink-400">@morningstar0213</span> to request access.
+            <div className="font-mono-display text-[10px] text-orange-400 tracking-widest mb-0.5">PRIVATE REPOSITORY</div>
+            <div className="text-sm text-white/60 group-hover:text-white/80 transition-colors">
+              DM on Instagram <span className="font-mono-display text-pink-400">@morningstar0213</span> to request access.
             </div>
           </div>
-          <ExternalLink className="w-4 h-4 text-emerald-400 group-hover:translate-x-1 transition-transform" />
         </a>
 
-        <div className="mb-8">
-          <h4 className="text-base font-sans font-bold text-white mb-4 flex items-center gap-2">
-            <Shield className="w-4 h-4 text-emerald-400" />
-            Key Features
-          </h4>
-          <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            {project.highlights.map((highlight: string, i: number) => (
-              <li
-                key={i}
-                className="flex items-start gap-2.5 p-3 rounded-xl bg-slate-900/60 border border-slate-800 text-xs text-slate-300"
-              >
-                <span className="text-emerald-400 font-bold mt-0.5">▸</span>
-                <span>{highlight}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
+        {/* Highlights */}
+        <h4 className="font-bold text-white text-sm mb-3 flex items-center gap-2">
+          <Shield size={14} className="text-orange-400" /> Key Features
+        </h4>
+        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-6">
+          {project.highlights.map((h, i) => (
+            <li key={i} className="flex items-start gap-2 p-3 rounded-xl bg-white/[0.03] border border-white/[0.05] text-xs text-white/50">
+              <span className="text-orange-400 mt-0.5 shrink-0">▸</span>
+              <span>{h}</span>
+            </li>
+          ))}
+        </ul>
 
-        <div>
-          <h4 className="text-base font-sans font-bold text-white mb-4">
-            Technologies Used
-          </h4>
-          <div className="flex flex-wrap gap-2">
-            {project.tech.map((tech: string, i: number) => (
-              <span
-                key={i}
-                className="px-3 py-1.5 bg-slate-900 border border-slate-800 rounded-xl text-xs font-mono text-emerald-300"
-              >
-                {tech}
-              </span>
-            ))}
-          </div>
+        {/* Tech stack */}
+        <h4 className="font-bold text-white text-sm mb-3">Tech Stack</h4>
+        <div className="flex flex-wrap gap-2">
+          {project.tech.map(t => (
+            <span key={t} className="badge">{t}</span>
+          ))}
         </div>
       </motion.div>
     </motion.div>
+  );
+}
+
+export function Projects() {
+  const [selected, setSelected] = useState<number | null>(null);
+  const selectedProject = projects.find(p => p.id === selected) ?? null;
+
+  return (
+    <section id="projects" className="relative py-24 md:py-36 overflow-hidden">
+      <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full pointer-events-none"
+        style={{ background: 'radial-gradient(circle, rgba(249,115,22,0.05) 0%, transparent 70%)' }} />
+
+      <div className="max-w-5xl mx-auto px-4 md:px-10 rail-offset">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          className="text-center mb-16"
+        >
+          <div className="section-label mb-3">04 — Projects</div>
+          <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
+            18 Security{' '}
+            <span className="text-transparent bg-clip-text"
+              style={{ backgroundImage: 'linear-gradient(90deg, #f97316, #f59e0b)' }}>
+              Tools &amp; Projects
+            </span>
+          </h2>
+          <p className="text-white/40 text-sm md:text-base max-w-lg mx-auto">
+            Offensive tools, encryption systems, and red team utilities — all built from scratch.
+            Source code is private; tap any card for details.
+          </p>
+        </motion.div>
+
+        {/* Grid */}
+        <div
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+          onClick={e => {
+            const card = (e.target as HTMLElement).closest('[data-project-id]') as HTMLElement | null;
+            if (card) setSelected(Number(card.dataset.projectId));
+          }}
+        >
+          {projects.map((project, index) => (
+            <div
+              key={project.id}
+              data-project-id={project.id}
+              className="cursor-pointer"
+            >
+              <ProjectCard project={project} index={index} />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Modal */}
+      <AnimatePresence>
+        {selectedProject && (
+          <Modal project={selectedProject} onClose={() => setSelected(null)} />
+        )}
+      </AnimatePresence>
+    </section>
   );
 }

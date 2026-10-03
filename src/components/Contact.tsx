@@ -1,146 +1,130 @@
-import { motion } from 'framer-motion';
-import { Send, Instagram, Mail, Shield, ArrowUpRight, Twitter } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { Twitter, Instagram, Send, Mail, ExternalLink } from 'lucide-react';
 
-export function Contact() {
-  const [isMobile, setIsMobile] = useState(false);
+const contacts = [
+  {
+    icon: Twitter,
+    label: 'Twitter / X',
+    handle: '@MORNINGSTAR0213',
+    sub: 'Follow for security research & updates',
+    href: 'https://x.com/MORNINGSTAR0213',
+    color: 'from-sky-500/15 to-blue-600/10',
+    border: 'border-sky-500/20 hover:border-sky-400/50',
+    iconColor: 'text-sky-400',
+  },
+  {
+    icon: Instagram,
+    label: 'Instagram',
+    handle: '@morningstar0213',
+    sub: 'DM for project code access & collabs',
+    href: 'https://instagram.com/morningstar0213',
+    color: 'from-pink-500/15 to-purple-600/10',
+    border: 'border-pink-500/20 hover:border-pink-400/50',
+    iconColor: 'text-pink-400',
+  },
+  {
+    icon: Send,
+    label: 'Telegram',
+    handle: '@morningstar_0213',
+    sub: 'Direct encrypted communication',
+    href: 'https://t.me/morningstar_0213',
+    color: 'from-blue-500/15 to-cyan-600/10',
+    border: 'border-blue-500/20 hover:border-blue-400/50',
+    iconColor: 'text-blue-400',
+  },
+  {
+    icon: Mail,
+    label: 'Email',
+    handle: 'visheshranjan0213@gmail.com',
+    sub: 'For professional inquiries & pentests',
+    href: 'mailto:visheshranjan0213@gmail.com',
+    color: 'from-orange-500/15 to-amber-600/10',
+    border: 'border-orange-500/20 hover:border-orange-400/50',
+    iconColor: 'text-orange-400',
+  },
+];
 
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
-  const socialLinks = [
-    {
-      icon: Twitter,
-      label: 'Twitter / X',
-      handle: '@MORNINGSTAR0213',
-      url: 'https://x.com/MORNINGSTAR0213',
-    },
-    {
-      icon: Instagram,
-      label: 'Instagram',
-      handle: '@morningstar0213',
-      url: 'https://instagram.com/morningstar0213',
-    },
-    {
-      icon: Send,
-      label: 'Telegram',
-      handle: '@morningstar_0213',
-      url: 'https://t.me/morningstar_0213',
-    },
-    {
-      icon: Mail,
-      label: 'Email',
-      handle: 'visheshranjan0213@gmail.com',
-      url: 'mailto:visheshranjan0213@gmail.com',
-    },
-  ];
+function ContactCard({ c, index }: { c: typeof contacts[0]; index: number }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start 0.9', 'end 0.5'] });
+  const fromLeft = index % 2 === 0;
+  const x = useTransform(scrollYProgress, [0, 0.6], [fromLeft ? -50 : 50, 0]);
+  const opacity = useTransform(scrollYProgress, [0, 0.45], [0, 1]);
 
   return (
-    <section id="contact" className="relative py-20 md:py-32 px-4 overflow-hidden">
-      <div className="max-w-4xl mx-auto relative z-10">
+    <motion.div ref={ref} style={{ x, opacity }}>
+      <a
+        href={c.href}
+        target={c.href.startsWith('mailto') ? undefined : '_blank'}
+        rel="noopener noreferrer"
+        className={`flex items-center gap-4 p-5 rounded-2xl bg-gradient-to-br ${c.color}
+          border ${c.border} transition-all duration-300 group block`}
+      >
+        <div className="w-12 h-12 rounded-xl bg-white/[0.05] border border-white/[0.07]
+          flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+          <c.icon size={20} className={c.iconColor} />
+        </div>
+        <div className="flex-1 min-w-0">
+          <div className="font-mono-display text-[10px] tracking-widest text-white/30 mb-0.5">{c.label}</div>
+          <div className="font-bold text-white text-sm truncate">{c.handle}</div>
+          <div className="text-white/40 text-xs mt-0.5">{c.sub}</div>
+        </div>
+        <ExternalLink size={14} className="text-white/20 group-hover:text-white/50 transition-colors shrink-0" />
+      </a>
+    </motion.div>
+  );
+}
+
+export function Contact() {
+  return (
+    <section id="contact" className="relative py-24 md:py-36 overflow-hidden">
+      {/* Ambient glow */}
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] pointer-events-none"
+        style={{ background: 'radial-gradient(ellipse, rgba(249,115,22,0.08) 0%, transparent 70%)' }} />
+
+      <div className="max-w-3xl mx-auto px-4 md:px-10 rail-offset">
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 25 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false, amount: 0.2 }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-16 md:mb-20"
+          viewport={{ once: true, amount: 0.3 }}
+          className="text-center mb-16"
         >
-          <span className="font-mono text-xs text-emerald-400 font-semibold uppercase tracking-widest px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 mb-3 inline-block">
-            Get In Touch
-          </span>
-          <h2 className="text-2xl sm:text-4xl md:text-5xl font-sans font-extrabold text-white mb-3 tracking-tight">
-            Connect & Collaborate
+          <div className="section-label mb-3">05 — Contact</div>
+          <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
+            Let&apos;s{' '}
+            <span className="text-transparent bg-clip-text"
+              style={{ backgroundImage: 'linear-gradient(90deg, #f97316, #f59e0b)' }}>
+              Connect
+            </span>
           </h2>
-          <p className="text-slate-400 text-sm sm:text-base max-w-lg mx-auto font-sans">
-            Available for security consulting, penetration testing assessments, red teaming, and technical collaboration
+          <p className="text-white/40 text-sm md:text-base max-w-md mx-auto">
+            Available for penetration testing engagements, red team operations, and security consulting.
           </p>
         </motion.div>
 
-        {/* Social Link Cards (NO GITHUB) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
-          {socialLinks.map((link, index) => {
-            const isLeft = index % 2 === 0;
-
-            return (
-              <motion.a
-                key={index}
-                href={link.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                initial={{
-                  opacity: 0,
-                  x: isMobile ? 0 : isLeft ? -50 : 50,
-                  y: isMobile ? 25 : 0,
-                }}
-                whileInView={{ opacity: 1, x: 0, y: 0 }}
-                viewport={{ once: false, amount: 0.2 }}
-                transition={{ duration: 0.5, ease: 'easeOut' }}
-                whileHover={{ scale: 1.02 }}
-                className="luxury-glass relative rounded-2xl p-5 md:p-6 transition-all duration-300 flex items-center justify-between group hover:border-emerald-500/40"
-              >
-                <div className="flex items-center gap-3.5 min-w-0">
-                  <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 text-emerald-400 group-hover:border-emerald-500/40 transition-colors">
-                    <link.icon className="w-5 h-5" />
-                  </div>
-                  <div className="min-w-0">
-                    <div className="text-slate-500 text-xs font-mono mb-0.5">{link.label}</div>
-                    <div className="text-white font-sans font-semibold text-xs sm:text-sm group-hover:text-emerald-300 transition-colors truncate">
-                      {link.handle}
-                    </div>
-                  </div>
-                </div>
-
-                <ArrowUpRight className="w-4 h-4 text-slate-500 group-hover:text-emerald-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
-              </motion.a>
-            );
-          })}
+        {/* Contact grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-16">
+          {contacts.map((c, i) => (
+            <ContactCard key={c.label} c={c} index={i} />
+          ))}
         </div>
 
-        {/* Call to Action Banner */}
-        <motion.div
-          initial={{ opacity: 0, y: 25 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false, amount: 0.2 }}
-          transition={{ duration: 0.5 }}
-          className="luxury-glass rounded-3xl p-6 md:p-10 text-center"
-        >
-          <div className="flex justify-center mb-5">
-            <div className="p-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400">
-              <Shield className="w-8 h-8" />
-            </div>
-          </div>
-          
-          <h3 className="text-xl sm:text-2xl font-sans font-bold text-white mb-2">
-            Secure Your Digital Infrastructure
-          </h3>
-          <p className="text-slate-400 text-xs sm:text-sm mb-6 max-w-md mx-auto font-sans leading-relaxed">
-            Whether you require manual penetration testing, code auditing, or red team simulations, let's connect.
-          </p>
-          
-          <a
-            href="mailto:visheshranjan0213@gmail.com"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-sans font-semibold text-xs sm:text-sm rounded-xl shadow-lg shadow-emerald-500/20 transition-all"
-          >
-            <Mail className="w-4 h-4" />
-            <span>Start Conversation</span>
-          </a>
-        </motion.div>
-
-        {/* Footer Quote */}
+        {/* Footer strip */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          viewport={{ once: false, amount: 0.2 }}
+          viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="mt-14 text-center"
+          className="flex flex-col items-center gap-4 pt-10 border-t border-white/[0.05]"
         >
-          <p className="text-slate-500 font-mono text-xs italic px-4">
-            "From the shadows to the spotlight, using darkness to protect the light."
+          <div className="w-8 h-8 rounded bg-gradient-to-br from-orange-500 to-amber-500 flex items-center justify-center">
+            <span className="font-mono-display font-bold text-[11px] text-black">VR</span>
+          </div>
+          <p className="font-mono-display text-[10px] tracking-widest text-white/20 text-center">
+            © 2025 VISHESH RANJAN · ETHICAL HACKER &amp; SECURITY SPECIALIST<br />
+            ALL PROJECT CODE IS PRIVATE — DM ON INSTAGRAM TO REQUEST ACCESS
           </p>
         </motion.div>
       </div>

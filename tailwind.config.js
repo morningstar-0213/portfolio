@@ -58,6 +58,10 @@ export default {
           ring: "var(--sidebar-ring)",
         },
       },
+      fontFamily: {
+        'display':      ['"Space Grotesk"', 'system-ui', 'sans-serif'],
+        'mono-display': ['"Space Mono"', 'monospace'],
+      },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
