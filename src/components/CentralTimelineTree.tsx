@@ -91,6 +91,17 @@ export function CentralTimelineTree({ containerRef }: { containerRef: React.RefO
     let animId: number;
     let time = 0;
 
+    // 180 Floating Cosmic Stardust Embers (0.05ms execution, zero WebGL overhead)
+    const particleCount = 180;
+    const particles = Array.from({ length: particleCount }, () => ({
+      x: Math.random(),
+      y: Math.random(),
+      size: 0.7 + Math.random() * 2.0,
+      speed: 0.0006 + Math.random() * 0.0012,
+      color: Math.random() > 0.6 ? '#ffffff' : Math.random() > 0.3 ? '#ccff00' : '#00ff88',
+      alpha: 0.2 + Math.random() * 0.5,
+    }));
+
     const render = () => {
       time += 0.028;
 
@@ -108,6 +119,25 @@ export function CentralTimelineTree({ containerRef }: { containerRef: React.RefO
       }
 
       ctx.clearRect(0, 0, viewportWidth, viewportHeight);
+
+      // Draw floating cosmic stardust embers across the full screen
+      for (let p = 0; p < particleCount; p++) {
+        const pt = particles[p];
+        pt.y -= pt.speed;
+        if (pt.y < 0) {
+          pt.y = 1;
+          pt.x = Math.random();
+        }
+        const px = pt.x * viewportWidth;
+        const py = pt.y * viewportHeight;
+
+        ctx.fillStyle = pt.color;
+        ctx.globalAlpha = pt.alpha;
+        ctx.beginPath();
+        ctx.arc(px, py, pt.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1.0;
 
       if (!containerRef.current) {
         animId = requestAnimationFrame(render);

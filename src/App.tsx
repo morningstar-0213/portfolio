@@ -35,7 +35,6 @@ import {
 import profileImg from './assets/profile.jpg';
 import { PORTFOLIO_DATA, ProjectItem } from './data/portfolioData';
 import { CosmicGalaxies } from './components/CosmicGalaxies';
-import { ThreeCosmicScene } from './components/ThreeCosmicScene';
 import { CentralTimelineTree } from './components/CentralTimelineTree';
 import { Navigation } from './components/Navigation';
 import { ProjectModal } from './components/ProjectModal';
@@ -92,13 +91,10 @@ export default function App() {
       ref={containerRef}
       className="relative min-h-screen bg-[#010c05] text-[#f0fdf4] selection:bg-[#ccff00] selection:text-black overflow-x-hidden"
     >
-      {/* ── 1. Cosmic Background Realm (Deep Nebulae & Spinning Galaxies) ── */}
+      {/* ── 1. Cosmic Background Realm (Deep Nebulae & Soft Spiral Galaxies) ── */}
       <CosmicGalaxies />
 
-      {/* ── 2. 3D WebGL Cosmic Atmosphere (Rising Stardust & Rotating Spiral Galaxy Core) ── */}
-      <ThreeCosmicScene />
-
-      {/* ── 3. Majestic Braided Timeline Tree & Emerging Lateral Branches ── */}
+      {/* ── 2. Unified Canvas Engine: Living Braided Tree, Stardust Embers & Lateral Branches ── */}
       <CentralTimelineTree containerRef={containerRef} />
 
       {/* ── 4. Fixed Glowing Navigation Bar ── */}
@@ -278,15 +274,14 @@ export default function App() {
               return (
                 <div
                   key={cert.id}
-                  className={`flex w-full ${isLeft ? 'justify-start pr-[52%] sm:pr-[54%] md:pr-[58%] lg:pr-[60%]' : 'justify-end pl-[52%] sm:pl-[54%] md:pl-[58%] lg:pl-[60%]'}`}
+                  className={`flex w-full ${isLeft ? 'justify-start' : 'justify-end'}`}
                 >
                   <motion.div
-                    initial={{ opacity: 0, x: isLeft ? -50 : 50, scale: 0.92 }}
+                    initial={{ opacity: 0, x: isLeft ? -40 : 40, scale: 0.95 }}
                     whileInView={{ opacity: 1, x: 0, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.9 }}
-                    viewport={{ amount: 0.3, margin: '-5% 0px -15% 0px' }}
-                    transition={{ duration: 0.5 }}
-                    className="w-full"
+                    viewport={{ once: true, amount: 0.15 }}
+                    transition={{ duration: 0.4 }}
+                    className="w-[47%] sm:w-[46%] md:w-[44%] lg:w-[42%] max-w-xl"
                   >
                     <TiltCard
                       id={`cert-${cert.id}`}
@@ -356,15 +351,14 @@ export default function App() {
               return (
                 <div
                   key={domain.title}
-                  className={`flex w-full ${isLeft ? 'justify-start pr-[52%] sm:pr-[54%] md:pr-[58%] lg:pr-[60%]' : 'justify-end pl-[52%] sm:pl-[54%] md:pl-[58%] lg:pl-[60%]'}`}
+                  className={`flex w-full ${isLeft ? 'justify-start' : 'justify-end'}`}
                 >
                   <motion.div
-                    initial={{ opacity: 0, x: isLeft ? -50 : 50, scale: 0.92 }}
+                    initial={{ opacity: 0, x: isLeft ? -40 : 40, scale: 0.95 }}
                     whileInView={{ opacity: 1, x: 0, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.9 }}
-                    viewport={{ amount: 0.3, margin: '-5% 0px -15% 0px' }}
-                    transition={{ duration: 0.5 }}
-                    className="w-full"
+                    viewport={{ once: true, amount: 0.15 }}
+                    transition={{ duration: 0.4 }}
+                    className="w-[47%] sm:w-[46%] md:w-[44%] lg:w-[42%] max-w-xl"
                   >
                     <TiltCard
                       id={`domain-${idx}`}
@@ -486,15 +480,14 @@ export default function App() {
               return (
                 <div
                   key={project.id}
-                  className={`flex w-full ${isLeft ? 'justify-start pr-[52%] sm:pr-[54%] md:pr-[58%] lg:pr-[60%]' : 'justify-end pl-[52%] sm:pl-[54%] md:pl-[58%] lg:pr-[60%]'}`}
+                  className={`flex w-full ${isLeft ? 'justify-start' : 'justify-end'}`}
                 >
                   <motion.div
-                    initial={{ opacity: 0, x: isLeft ? -50 : 50, scale: 0.92 }}
+                    initial={{ opacity: 0, x: isLeft ? -40 : 40, scale: 0.95 }}
                     whileInView={{ opacity: 1, x: 0, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.9 }}
-                    viewport={{ amount: 0.25, margin: '-5% 0px -15% 0px' }}
-                    transition={{ duration: 0.5 }}
-                    className="w-full"
+                    viewport={{ once: true, amount: 0.15 }}
+                    transition={{ duration: 0.4 }}
+                    className="w-[47%] sm:w-[46%] md:w-[44%] lg:w-[42%] max-w-xl"
                   >
                     <TiltCard
                       id={`project-${project.id}`}
@@ -594,14 +587,14 @@ export default function App() {
               return (
                 <div
                   key={c.label}
-                  className={`flex w-full ${isLeft ? 'justify-start pr-[52%] sm:pr-[54%] md:pr-[58%] lg:pr-[60%]' : 'justify-end pl-[52%] sm:pl-[54%] md:pl-[58%] lg:pl-[60%]'}`}
+                  className={`flex w-full ${isLeft ? 'justify-start' : 'justify-end'}`}
                 >
                   <motion.div
-                    initial={{ opacity: 0, x: isLeft ? -50 : 50, scale: 0.92 }}
+                    initial={{ opacity: 0, x: isLeft ? -40 : 40, scale: 0.95 }}
                     whileInView={{ opacity: 1, x: 0, scale: 1 }}
-                    viewport={{ amount: 0.3 }}
-                    transition={{ duration: 0.5 }}
-                    className="w-full"
+                    viewport={{ once: true, amount: 0.15 }}
+                    transition={{ duration: 0.4 }}
+                    className="w-[47%] sm:w-[46%] md:w-[44%] lg:w-[42%] max-w-xl"
                   >
                     <TiltCard
                       id={`contact-${idx}`}
