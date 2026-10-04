@@ -104,8 +104,8 @@ export default function App() {
       {/* ── 4. Fixed Glowing Navigation Bar ── */}
       <Navigation />
 
-      {/* ── 5. Main Timeline Stream (Cards Moved Generously Outward Left & Right) ── */}
-      <div className="relative z-20 max-w-7xl mx-auto px-2.5 sm:px-8 py-20">
+      {/* ── 5. Main Timeline Stream (Zoomed to 80% for Spacious Presentation) ── */}
+      <div className="relative z-20 max-w-7xl mx-auto px-2.5 sm:px-8 py-20" style={{ zoom: 0.8 }}>
 
         {/* ══════════════════════════════════════════════════════════
             01 — HERO / CORE (Tree Apex / Roots)
