@@ -1,9 +1,10 @@
-import { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import {
   Shield, Wifi, Globe, Key, Lock,
   Terminal, Eye, Network,
 } from 'lucide-react';
+import { useSectionRegistry } from '../context/SectionRegistry';
 
 const domains = [
   {
@@ -73,21 +74,21 @@ function SkillCard({ domain, index }: { domain: typeof domains[0]; index: number
 
   return (
     <motion.div ref={ref} style={{ x, opacity }}>
-      <div className="card rounded-2xl p-5 h-full flex flex-col gap-3 cursor-default group">
+      <div className="card rounded-2xl p-5 h-full flex flex-col gap-3 cursor-default group hover:border-emerald-400/50 transition-all duration-300">
         <div className="flex items-start gap-3">
-          <div className="w-10 h-10 rounded-xl bg-orange-500/10 border border-orange-500/20
-            flex items-center justify-center shrink-0 group-hover:bg-orange-500/20 transition-colors">
-            <domain.icon size={18} className="text-orange-400" />
+          <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/30
+            flex items-center justify-center shrink-0 group-hover:bg-emerald-500/20 group-hover:border-emerald-400/60 transition-colors">
+            <domain.icon size={18} className="text-emerald-400" />
           </div>
           <div>
             <h3 className="font-bold text-white text-sm md:text-base mb-1">{domain.title}</h3>
-            <p className="text-white/40 text-xs leading-relaxed">{domain.desc}</p>
+            <p className="text-white/45 text-xs leading-relaxed">{domain.desc}</p>
           </div>
         </div>
         <div className="flex flex-wrap gap-1.5 pt-2 border-t border-white/[0.04]">
           {domain.tools.map(t => (
-            <span key={t} className="font-mono-display text-[10px] px-2 py-0.5 rounded bg-white/[0.04]
-              border border-white/[0.06] text-white/40">{t}</span>
+            <span key={t} className="font-mono-display text-[10px] px-2 py-0.5 rounded bg-emerald-950/30
+              border border-emerald-500/20 text-emerald-300/60">{t}</span>
           ))}
         </div>
       </div>
@@ -96,15 +97,26 @@ function SkillCard({ domain, index }: { domain: typeof domains[0]; index: number
 }
 
 export function Expertise() {
+  const ref = useRef<HTMLElement>(null);
+  const { registerSection, unregisterSection } = useSectionRegistry();
   const arsenalRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress: arp } = useScroll({ target: arsenalRef, offset: ['start 0.9', 'end 0.6'] });
   const arsenalY = useTransform(arp, [0, 1], [40, 0]);
   const arsenalO = useTransform(arp, [0, 0.5], [0, 1]);
 
+  useEffect(() => {
+    if (ref.current) {
+      registerSection({ id: 'expertise', label: 'Expertise', ref });
+    }
+    return () => unregisterSection('expertise');
+  }, [registerSection, unregisterSection]);
+
   return (
-    <section id="expertise" className="relative py-24 md:py-36 overflow-hidden">
-      <div className="absolute top-1/3 right-0 w-[400px] h-[400px] rounded-full pointer-events-none"
-        style={{ background: 'radial-gradient(circle, rgba(245,158,11,0.06) 0%, transparent 70%)' }} />
+    <section id="expertise" ref={ref} className="relative py-24 md:py-36 overflow-hidden">
+      <div
+        className="absolute top-1/3 right-0 w-[400px] h-[400px] rounded-full pointer-events-none"
+        style={{ background: 'radial-gradient(circle, rgba(16,185,129,0.06) 0%, transparent 70%)' }}
+      />
 
       <div className="max-w-5xl mx-auto px-4 md:px-10 rail-offset">
         {/* Header */}
@@ -114,11 +126,10 @@ export function Expertise() {
           viewport={{ once: true, amount: 0.3 }}
           className="text-center mb-16"
         >
-          <div className="section-label mb-3">03 — Expertise</div>
+          <div className="section-label mb-3 text-emerald-400">03 — Expertise</div>
           <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
             What I{' '}
-            <span className="text-transparent bg-clip-text"
-              style={{ backgroundImage: 'linear-gradient(90deg, #f97316, #f59e0b)' }}>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-emerald-500">
               Specialize In
             </span>
           </h2>
@@ -139,7 +150,7 @@ export function Expertise() {
           ref={arsenalRef}
           style={{ y: arsenalY, opacity: arsenalO }}
         >
-          <div className="section-label mb-5 text-center">ARSENAL &amp; TOOLKIT</div>
+          <div className="section-label mb-5 text-center text-emerald-400">ARSENAL &amp; TOOLKIT</div>
           <div className="flex flex-wrap gap-2 justify-center">
             {arsenal.map((tool, i) => (
               <motion.span
@@ -148,7 +159,9 @@ export function Expertise() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.04 }}
-                className="badge hover:border-orange-400/60 hover:text-orange-300 transition-colors cursor-default"
+                className="font-mono-display text-[10px] tracking-wider px-3 py-1 rounded-full
+                  bg-emerald-950/40 border border-emerald-500/25 text-emerald-300/80
+                  hover:border-emerald-400 hover:text-emerald-200 hover:bg-emerald-900/30 transition-all cursor-default"
               >
                 {tool}
               </motion.span>

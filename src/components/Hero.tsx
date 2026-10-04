@@ -1,7 +1,8 @@
-import { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Twitter, Instagram, Send, ChevronDown } from 'lucide-react';
 import profileImg from '../assets/profile.jpg';
+import { useSectionRegistry } from '../context/SectionRegistry';
 
 /* ─── Floating particle chip ─── */
 function Chip({ children, delay = 0, x = 0, y = 0 }: {
@@ -15,7 +16,7 @@ function Chip({ children, delay = 0, x = 0, y = 0 }: {
       style={{ position: 'absolute', left: `${x}%`, top: `${y}%` }}
       whileHover={{ scale: 1.08 }}
       className="font-mono-display text-[10px] tracking-widest px-3 py-1.5 rounded-full
-        bg-[#0d1224] border border-orange-500/25 text-orange-300/80 whitespace-nowrap shadow-xl cursor-default"
+        bg-[#091512]/90 border border-emerald-500/30 text-emerald-300/90 whitespace-nowrap shadow-xl cursor-default backdrop-blur-md"
     >
       {children}
     </motion.div>
@@ -26,7 +27,7 @@ function Chip({ children, delay = 0, x = 0, y = 0 }: {
 function Stat({ value, label }: { value: string; label: string }) {
   return (
     <div className="flex flex-col items-center gap-0.5">
-      <span className="font-mono-display text-xl md:text-2xl font-bold text-orange-400">{value}</span>
+      <span className="font-mono-display text-xl md:text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-300">{value}</span>
       <span className="font-mono-display text-[10px] tracking-widest text-white/35 uppercase">{label}</span>
     </div>
   );
@@ -34,7 +35,15 @@ function Stat({ value, label }: { value: string; label: string }) {
 
 export function Hero() {
   const ref = useRef<HTMLElement>(null);
+  const { registerSection, unregisterSection } = useSectionRegistry();
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
+
+  useEffect(() => {
+    if (ref.current) {
+      registerSection({ id: 'home', label: 'Home', ref });
+    }
+    return () => unregisterSection('home');
+  }, [registerSection, unregisterSection]);
 
   /* Parallax layers */
   const titleY = useTransform(scrollYProgress, [0, 1], ['0%', '25%']);
@@ -54,8 +63,9 @@ export function Hero() {
         style={{ y: bgY }}
       />
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#050810]" />
-      <div className="absolute inset-0"
-        style={{ background: 'radial-gradient(ellipse 60% 55% at 50% 45%, rgba(249,115,22,0.08) 0%, transparent 70%)' }}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{ background: 'radial-gradient(ellipse 65% 55% at 50% 45%, rgba(16,185,129,0.08) 0%, rgba(5,150,105,0.02) 40%, transparent 70%)' }}
       />
 
       {/* ── Floating Tech Chips (desktop) ── */}
@@ -78,11 +88,11 @@ export function Hero() {
           initial={{ opacity: 0, y: -16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="flex items-center gap-2 mb-8"
+          className="flex items-center gap-2 mb-8 px-4 py-1.5 rounded-full bg-emerald-950/40 border border-emerald-500/30 backdrop-blur-md"
         >
-          <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-          <span className="font-mono-display text-[11px] tracking-[0.22em] text-green-400/80 uppercase">
-            Available for Engagements
+          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_10px_#10b981]" />
+          <span className="font-mono-display text-[11px] tracking-[0.22em] text-emerald-400 uppercase font-semibold">
+            Timeline Active · Available for Engagements
           </span>
         </motion.div>
 
@@ -93,18 +103,18 @@ export function Hero() {
         >
           {/* Rotating ring */}
           <motion.div
-            className="absolute -inset-3 rounded-full border border-orange-500/25"
+            className="absolute -inset-3 rounded-full border border-emerald-500/30"
             animate={{ rotate: 360 }}
-            transition={{ duration: 12, repeat: Infinity, ease: 'linear' }}
+            transition={{ duration: 16, repeat: Infinity, ease: 'linear' }}
           />
           {/* Second ring */}
           <motion.div
-            className="absolute -inset-6 rounded-full border border-orange-400/10"
+            className="absolute -inset-6 rounded-full border border-emerald-400/15"
             animate={{ rotate: -360 }}
-            transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+            transition={{ duration: 24, repeat: Infinity, ease: 'linear' }}
           />
           {/* Avatar */}
-          <div className="w-28 h-28 md:w-36 md:h-36 rounded-full overflow-hidden ring-2 ring-orange-500/50 orange-glow">
+          <div className="w-28 h-28 md:w-36 md:h-36 rounded-full overflow-hidden ring-2 ring-emerald-500/60 shadow-[0_0_35px_rgba(16,185,129,0.35)]">
             <img src={profileImg} alt="Vishesh Ranjan" className="w-full h-full object-cover" />
           </div>
         </motion.div>
@@ -118,8 +128,7 @@ export function Hero() {
         >
           Vishesh
           <br />
-          <span className="text-transparent bg-clip-text"
-            style={{ backgroundImage: 'linear-gradient(90deg, #f97316, #f59e0b, #f97316)', backgroundSize: '200%' }}>
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-emerald-500 drop-shadow-[0_0_25px_rgba(16,185,129,0.35)]">
             Ranjan
           </span>
         </motion.h1>
@@ -129,7 +138,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.35 }}
-          className="font-mono-display text-xs md:text-sm tracking-[0.2em] text-white/40 uppercase mb-2"
+          className="font-mono-display text-xs md:text-sm tracking-[0.2em] text-emerald-400/70 uppercase mb-2"
         >
           Ethical Hacker &amp; Security Specialist
         </motion.p>
@@ -137,7 +146,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.45 }}
-          className="text-base md:text-lg text-white/55 max-w-xl leading-relaxed mb-10"
+          className="text-base md:text-lg text-white/60 max-w-xl leading-relaxed mb-10"
         >
           Building tools to break systems — so others can't.
           Offensive security research, red team operations &amp; network defense.
@@ -148,12 +157,12 @@ export function Hero() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.55 }}
-          className="flex items-center gap-8 md:gap-14 mb-10 px-6 md:px-12 py-4 rounded-2xl bg-[#090d1a]/80 border border-white/[0.05] backdrop-blur-md"
+          className="flex items-center gap-8 md:gap-14 mb-10 px-6 md:px-12 py-4 rounded-2xl bg-[#091512]/80 border border-emerald-500/20 backdrop-blur-md shadow-[0_4px_24px_rgba(0,0,0,0.5)]"
         >
           <Stat value="18+" label="Projects" />
-          <div className="w-px h-8 bg-white/[0.06]" />
+          <div className="w-px h-8 bg-emerald-500/20" />
           <Stat value="5+" label="Certs" />
-          <div className="w-px h-8 bg-white/[0.06]" />
+          <div className="w-px h-8 bg-emerald-500/20" />
           <Stat value="3+" label="Yrs Exp" />
         </motion.div>
 
@@ -168,17 +177,17 @@ export function Hero() {
             href="#projects"
             onClick={e => { e.preventDefault(); document.querySelector('#projects')?.scrollIntoView({ behavior: 'smooth' }); }}
             className="px-6 py-3 rounded-xl font-semibold text-sm text-black
-              bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-400 hover:to-amber-400
-              transition-all duration-200 shadow-lg shadow-orange-500/25 hover:shadow-orange-500/40"
+              bg-gradient-to-r from-emerald-400 to-teal-400 hover:from-emerald-300 hover:to-teal-300
+              transition-all duration-200 shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50"
           >
             View Projects
           </a>
           <a
             href="#contact"
             onClick={e => { e.preventDefault(); document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' }); }}
-            className="px-6 py-3 rounded-xl font-semibold text-sm text-white/80
-              border border-white/10 hover:border-orange-500/40 hover:text-white
-              bg-white/[0.03] hover:bg-white/[0.06] transition-all duration-200"
+            className="px-6 py-3 rounded-xl font-semibold text-sm text-white/90
+              border border-emerald-500/30 hover:border-emerald-400 hover:text-white
+              bg-emerald-950/20 hover:bg-emerald-950/40 transition-all duration-200"
           >
             Get In Touch
           </a>
@@ -202,9 +211,9 @@ export function Hero() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={label}
-              className="w-9 h-9 rounded-lg flex items-center justify-center border border-white/[0.08]
-                text-white/40 hover:text-orange-400 hover:border-orange-500/40
-                bg-white/[0.03] hover:bg-orange-500/[0.08] transition-all duration-200"
+              className="w-9 h-9 rounded-lg flex items-center justify-center border border-emerald-500/20
+                text-emerald-300/60 hover:text-emerald-300 hover:border-emerald-400/60
+                bg-emerald-950/30 hover:bg-emerald-900/40 transition-all duration-200"
             >
               <Icon size={15} />
             </a>
@@ -219,8 +228,8 @@ export function Hero() {
         transition={{ duration: 2, repeat: Infinity }}
         style={{ opacity }}
       >
-        <span className="font-mono-display text-[10px] text-white/20 tracking-widest uppercase">Scroll</span>
-        <ChevronDown size={14} className="text-white/20" />
+        <span className="font-mono-display text-[10px] text-emerald-400/40 tracking-widest uppercase">Scroll</span>
+        <ChevronDown size={14} className="text-emerald-400/40" />
       </motion.div>
     </section>
   );
