@@ -4,139 +4,106 @@
 
 @layer base {
   :root {
-    --c-bg:        #050810;
-    --c-surface:   #090d1a;
-    --c-card:      #0d1224;
-    --c-orange:    #f97316;
-    --c-amber:     #f59e0b;
-    --c-text:      #e2e8f0;
-    --c-muted:     #64748b;
-    --c-border:    rgba(249,115,22,0.18);
-
-    /* Yggdrasil World-Tree Theme (Loki S2 Emerald Temporal Loom) */
-    --tree-trunk:        #064e3b;
-    --tree-primary:      #10b981;
-    --tree-secondary:    #059669;
-    --tree-glow:         rgba(16, 185, 129, 0.45);
-    --branch-primary:    #34d399;
-    --branch-secondary:  #059669;
-    --branch-glow:       rgba(52, 211, 153, 0.35);
-    --leaf-color:        #6ee7b7;
-    --leaf-glow:         #00ff88;
-    --timeline-energy:   #a7f3d0;
+    --bg-cosmic: #010c05;
+    --tree-core: #ffffff;
+    --tree-lime: #ccff00;
+    --tree-emerald: #00ff88;
+    --tree-deep: #054422;
+    --text-primary: #f0fdf4;
+    --text-secondary: #86efac;
+    --text-muted: #6ee7b7;
   }
 
   html {
     scroll-behavior: smooth;
+    background-color: var(--bg-cosmic);
+    color: var(--text-primary);
+    zoom: 0.8;
   }
 
   body {
-    background-color: var(--c-bg);
-    color: var(--c-text);
-    font-family: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+    background-color: var(--bg-cosmic);
+    color: var(--text-primary);
+    font-family: 'Space Grotesk', 'Inter', system-ui, -apple-system, sans-serif;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
+    margin: 0;
+    padding: 0;
   }
 
-  * { box-sizing: border-box; }
+  * {
+    box-sizing: border-box;
+  }
 }
 
-/* ── Fonts ─────────────────────────────────────────── */
-.font-mono-display { font-family: 'Space Mono', monospace; }
-
-/* ── Cards ─────────────────────────────────────────── */
-.card {
-  background: rgba(13, 18, 36, 0.8);
-  border: 1px solid rgba(255,255,255,0.06);
-  backdrop-filter: blur(16px);
-  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
-}
-.card:hover {
-  border-color: rgba(249,115,22,0.4);
-  box-shadow: 0 8px 48px rgba(249,115,22,0.12), 0 2px 16px rgba(0,0,0,0.4);
-  transform: translateY(-3px);
+/* ── Typography ────────────────────────────────────── */
+.font-mono-display {
+  font-family: 'Space Mono', monospace, ui-monospace;
 }
 
-/* ── Orange & Emerald Glow ───────────────────────────── */
-.orange-glow {
-  box-shadow: 0 0 30px rgba(249,115,22,0.4), 0 0 80px rgba(249,115,22,0.15);
-}
-.amber-glow {
-  box-shadow: 0 0 30px rgba(245,158,11,0.35), 0 0 80px rgba(245,158,11,0.12);
-}
-.tree-glow {
-  box-shadow: 0 0 30px rgba(16,185,129,0.5), 0 0 80px rgba(16,185,129,0.2);
-}
-.leaf-glow {
-  box-shadow: 0 0 20px rgba(0,255,136,0.6), 0 0 50px rgba(52,211,153,0.3);
-}
-.emerald-border-glow {
-  border-color: rgba(52, 211, 153, 0.4);
-  box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
+/* ── Loki S2 Electric Glow Cards ───────────────────── */
+.loki-card {
+  background: rgba(3, 20, 10, 0.78);
+  border: 1px solid rgba(0, 255, 136, 0.28);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(204, 255, 0, 0.12);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateZ(0);
 }
 
-/* ── Section Label ──────────────────────────────────── */
-.section-label {
+.loki-card:hover {
+  border-color: rgba(204, 255, 0, 0.6);
+  box-shadow: 0 12px 48px rgba(0, 255, 136, 0.2), 0 0 25px rgba(204, 255, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+/* ── Electric Glows ────────────────────────────────── */
+.electric-glow {
+  box-shadow: 0 0 25px rgba(0, 255, 136, 0.6), 0 0 50px rgba(204, 255, 0, 0.3);
+}
+
+.text-gradient-electric {
+  background: linear-gradient(135deg, #ffffff 0%, #ccff00 35%, #00ff88 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-lime {
+  background: linear-gradient(135deg, #a3ff00 0%, #00ff88 60%, #14b8a6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ── Section Badge ─────────────────────────────────── */
+.section-badge {
   font-family: 'Space Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.2em;
+  font-size: 11px;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: #f97316;
-  opacity: 0.85;
+  color: #ccff00;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: 9999px;
+  background: rgba(3, 35, 15, 0.6);
+  border: 1px solid rgba(0, 255, 136, 0.4);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 15px rgba(0, 255, 136, 0.15);
 }
 
-/* ── Noise overlay (cinematic grain) ────────────────── */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: 999;
-  opacity: 0.5;
+/* ── Scrollbars ────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
 }
-
-/* ── Scrollbar ──────────────────────────────────────── */
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: #050810; }
-::-webkit-scrollbar-thumb { background: rgba(249,115,22,0.3); border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: #f97316; }
-
-/* ── Grid background ────────────────────────────────── */
-.grid-bg {
-  background-image:
-    linear-gradient(rgba(249,115,22,0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(249,115,22,0.04) 1px, transparent 1px);
-  background-size: 48px 48px;
+::-webkit-scrollbar-track {
+  background: #010c05;
 }
-
-/* ── Parallax container ─────────────────────────────── */
-.parallax-container {
-  transform-style: preserve-3d;
-  perspective: 1000px;
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 255, 136, 0.35);
+  border-radius: 4px;
 }
-
-/* ── Badge ──────────────────────────────────────────── */
-.badge {
-  font-family: 'Space Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.1em;
-  padding: 3px 10px;
-  border-radius: 99px;
-  border: 1px solid rgba(249,115,22,0.35);
-  color: #f97316;
-  background: rgba(249,115,22,0.08);
-}
-
-/* ── Horizontal rule ────────────────────────────────── */
-.h-rule {
-  height: 1px;
-  background: linear-gradient(to right, transparent, rgba(249,115,22,0.3), transparent);
-  margin: 0;
-  border: none;
-}
-
-/* ── Mobile padding for left rail ───────────────────── */
-@media (min-width: 768px) {
-  .rail-offset { padding-left: 64px; }
+::-webkit-scrollbar-thumb:hover {
+  background: #ccff00;
 }
